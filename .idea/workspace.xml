@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46944feb-5f43-461a-be1c-1b70bb80c12d" name="Default Changelist" comment="Added README and NAMES">
-      <change afterPath="$PROJECT_DIR$/../MAL Project/MAL programming assignment.pdf" afterDir="false" />
+    <list default="true" id="46944feb-5f43-461a-be1c-1b70bb80c12d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../MAL Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MAL Project/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592225475454</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added PDF for MAL Assignment">
+      <created>1592226333228</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592226333228</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,17 +176,18 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First commit" />
     <MESSAGE value="Added README and NAMES" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added README and NAMES" />
+    <MESSAGE value="Added PDF for MAL Assignment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added PDF for MAL Assignment" />
   </component>
   <component name="WindowStateProjectService">
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592226038258">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1504.963@0.0.1504.963" timestamp="1592226038258" />
-    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1592225566807">
+    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1592226330995">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1592225566807" />
+    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1592226330995" />
     <state x="533" y="224" key="FileChooserDialogImpl" timestamp="1592224679151">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
@@ -197,9 +204,9 @@
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="254" y="125" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1592226077929" />
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1592225599099">
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1592226340122">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1592225599099" />
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1592226340122" />
   </component>
 </project>
