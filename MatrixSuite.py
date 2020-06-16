@@ -5,6 +5,7 @@
 # You may not change the actions and payoffs of the matrix games in FixedMatrixSuite, only their representation.
 
 import abc
+import random
 from typing import List, Tuple, Dict
 
 # Define custom types for actions and payoffs.
@@ -129,3 +130,71 @@ class FixedMatrixSuite(MatrixSuite):
 
 
 # Add the other game suites below
+
+class RandomIntMatrixSuite(MatrixSuite):
+
+    def __init__(self) -> None:
+        self.name = "Random Int Matrix Suite"
+
+        self.generate_new_payoff_matrix()
+
+
+    def __repr__(self) -> str:
+        """Add some extra information to the print of this class."""
+        out = self.name + ": Matrix randomly generated (INT Payoffs) \n"
+        out += super().__repr__()  # Add the representation of the superclass ( GameSuite.__repr__() ).
+        return out
+
+    def generate_new_payoff_matrix(self) -> None:
+        n_row = random.randint(2, 5)
+        n_col = random.randint(2, 5)
+
+        matrix = []
+        payoffs = Tuple[Payoff, Payoff]
+
+        for row in range(0, n_row):
+            matrix_row = []
+            for col in range(0, n_col):
+                payoffs = (random.randint(0, 3), random.randint(0, 3))
+                matrix_row.append(payoffs)
+            matrix.append(matrix_row)
+
+        self.row_actions = list(range(n_row))
+        self.col_actions = list(range(n_col))
+        self.payoff_matrix = matrix
+
+
+
+
+
+class RandomFloatMatrixSuite(MatrixSuite):
+
+    def __init__(self) -> None:
+        self.name = "Random Float Matrix Suite"
+
+        self.generate_new_payoff_matrix()
+
+
+    def __repr__(self) -> str:
+        """Add some extra information to the print of this class."""
+        out = self.name + ": Matrix randomly generated (Float Payoffs) \n"
+        out += super().__repr__()  # Add the representation of the superclass ( GameSuite.__repr__() ).
+        return out
+
+    def generate_new_payoff_matrix(self) -> None:
+        n_row = random.randint(2, 5)
+        n_col = random.randint(2, 5)
+
+        matrix = []
+        payoffs = Tuple[Payoff, Payoff]
+
+        for row in range(0, n_row):
+            matrix_row = []
+            for col in range(0, n_col):
+                payoffs = (round(random.uniform(0.0, 3.0),3), round(random.uniform(0.0, 3.0),3))
+                matrix_row.append(payoffs)
+            matrix.append(matrix_row)
+
+        self.row_actions = list(range(n_row))
+        self.col_actions = list(range(n_col))
+        self.payoff_matrix = matrix

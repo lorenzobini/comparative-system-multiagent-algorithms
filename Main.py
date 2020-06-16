@@ -2,6 +2,8 @@
 # You may change everything about this file.
 
 from MatrixSuite import FixedMatrixSuite
+from MatrixSuite import RandomIntMatrixSuite
+from MatrixSuite import RandomFloatMatrixSuite
 import Strategies
 import Game
 from GrandTable import GrandTable
@@ -16,8 +18,23 @@ print(strategies)
 grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
 print(grand_table)
 
-table = grand_table.play_games()
+#table = grand_table.play_games()
 
+
+
+############# TEST AREA
+print("BEGIN  ########################################\n")
+
+
+matrix_int = RandomIntMatrixSuite()
+print(matrix_int)
+
+matrix_float = RandomFloatMatrixSuite()
+print(matrix_float)
+
+
+print("END  ########################################\n")
+########################
 
 
 
