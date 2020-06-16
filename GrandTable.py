@@ -90,3 +90,21 @@ class GrandTable:
         return out
 
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
+
+
+    def play_games(self) -> List[List[float]]:
+
+        for row_strategy in range[0:len(self.row_strategies)]:
+            for col_strategy in range[0:len(self.col_strategies)]:
+                game = self.games[row_strategy][col_strategy]
+
+                for session in range[1: self.restarts]:
+                    payoff = game.play(self.rounds, session)
+                    self.grand_table[row_strategy][col_strategy] += payoff
+
+                self.grand_table[row_strategy][col_strategy] /= self.restarts
+
+        return self.grand_table
+
+
+

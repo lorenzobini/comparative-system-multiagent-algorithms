@@ -16,6 +16,11 @@ print(strategies)
 grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
 print(grand_table)
 
+table = grand_table.play_games()
+
+
+
+
 # Example of how to test a strategy:
 matrix_suite = FixedMatrixSuite()  # Create a matrix suite
 
