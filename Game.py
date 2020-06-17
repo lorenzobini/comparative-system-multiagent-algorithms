@@ -60,3 +60,20 @@ class Game:
         self.col_player.initialize(self.matrix_suite, "col")
 
     # Add methods that implement the logic of playing a game, so play one round and play x rounds.
+
+    def play_round(self, round):
+        action = self.row_player.get_action(0)  # Get the next action
+        action1 = self.col_player.get_action(0)
+
+        self.row_player_actions.append(action)
+        self.col_player_actions.append(action1)
+
+        self.row_player_payoffs.append(self.matrix_suite.matrices[round][2][action][action1][0])
+        self.col_player_payoffs.append(self.matrix_suite.matrices[round][2][action][action1][1])
+
+    def play_game(self, round):
+        for i in range(0, 999):
+            self.play_round(round)
+        avgrow = sum(self.row_player_payoffs) / len(self.row_player_payoffs)
+        return avgrow
+
