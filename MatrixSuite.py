@@ -68,6 +68,23 @@ class MatrixSuite(metaclass=abc.ABCMeta):
         else:
             raise Exception("ERROR: *player* should be either 'row' of 'col', not '" + player + "'!")
 
+    def get_row_actions(self) -> List[Action]:
+        """Return the actions of the row player.
+        """
+        return self.row_actions
+
+    def get_col_actions(self) -> List[Action]:
+        """Return the actions of the column player.
+        """
+        return self.col_actions
+
+    def get_payoffs(self, row_action: int, col_action: int) -> Tuple[float, float]:
+        """Return the payoffs of both players given their respective actions.
+        """
+        return self.payoff_matrix[row_action][col_action]
+
+
+
 
 class FixedMatrixSuite(MatrixSuite):
     """Predetermined suite of matrices, don't use with more than 9 restarts, because it will run out of matrices.
