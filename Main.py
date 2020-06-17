@@ -28,23 +28,23 @@ print("BEGIN  ########################################\n")
 
 matrix_suite = FixedMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.Satisficing()  # Create the strategy you want to test.
-col_strat = Strategies.Satisficing()
+row_strat = Strategies.Bully()  # Create the strategy you want to test.
+col_strat = Strategies.Bully()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
-for round in range(0,10):
-     row_action = row_strat.get_action(round)  # Get the next action
-     col_action = col_strat.get_action(round)
-     print("Row plays action:" + row_action.__repr__())
+for round in range(0, 10):
+    row_action = row_strat.get_action(round)  # Get the next action
+    col_action = col_strat.get_action(round)
+    print("Col plays action:" + col_action.__repr__())
 
-     row_payoff, col_payoff = matrix_suite.get_payoffs(row_action, col_action)
+    row_payoff, col_payoff = matrix_suite.get_payoffs(row_action, col_action)
 
-     row_strat.update(round, row_action, row_payoff, col_action)
-     col_strat.update(round, col_action, col_payoff, row_action)# Update the strategy with a fake payoff and opponent action.
+    row_strat.update(round, row_action, row_payoff, col_action)
+    col_strat.update(round, col_action, col_payoff, row_action)# Update the strategy with a fake payoff and opponent action.
 # Now you might want to look at the class attributes of the strategy,
 # which you can call the same as functions, just without any parentheses.
-print("Satisficing actions:")
+print("Bully actions:")
 print(row_strat.actions, " ROW")
 print(col_strat.actions, " COL")
 print()

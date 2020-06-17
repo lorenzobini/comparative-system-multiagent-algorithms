@@ -8,8 +8,8 @@ import random
 import numpy as np
 from typing import List
 
-import MatrixSuite
 from MatrixSuite import Action, Payoff
+from MatrixSuite import MatrixSuite
 
 
 class Strategy(metaclass=abc.ABCMeta):
@@ -92,129 +92,172 @@ class Aselect(Strategy):
 # Add the other strategies below
 
 class EGreedy(Strategy):
-        """Implements the EGreedy (probabilistic exploitation-exploration) algorithm."""
-        actions: List[Action]
-        payoffs: List[Payoff]
+    """Implements the EGreedy (probabilistic exploitation-exploration) algorithm."""
+    actions: List[Action]
+    payoffs: List[Payoff]
 
-        def __init__(self):
+    def __init__(self):
 
-            self.name = "EGreedy"
-            self.epsilon = 0.1
-            self.prob = 1 - self.epsilon
-            self.actionlist = []
-            self.payofflist = []
+        self.name = "EGreedy"
+        self.epsilon = 0.1
+        self.prob = 1 - self.epsilon
+        self.actionlist = []
+        self.payofflist = []
 
-        def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-            """Just save the actions as that's the only thing we need."""
-            self.actions = matrix_suite.get_actions(player)
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """Just save the actions as that's the only thing we need."""
+        self.actions = matrix_suite.get_actions(player)
 
-        def get_action(self, round_: int) -> Action:
-            print(round_)
-            if (round_ == 1):
-                return random.choice(self.actions)
+    def get_action(self, round_: int) -> Action:
+        print(round_)
+        if (round_ == 1):
+            return random.choice(self.actions)
 
-            if (round_ == 2):
-                highestpayoff = self.payofflist[0]
+        if (round_ == 2):
+            highestpayoff = self.payofflist[0]
 
-            np_player_payoffs = np.asarray(self.payofflist, dtype=np.float32)
-            np_actions = np.asarray(self.actionlist, dtype=np.int)
+        np_player_payoffs = np.asarray(self.payofflist, dtype=np.float32)
+        np_actions = np.asarray(self.actionlist, dtype=np.int)
 
-            print(len(self.actionlist), "actionlist elements")
-            print(len(self.payofflist), "payofflist elements")
-            print(highestpayoff, "highestpayoff")
+        print(len(self.actionlist), "actionlist elements")
+        print(len(self.payofflist), "payofflist elements")
+        print(highestpayoff, "highestpayoff")
 
-            temp1 = []
+        temp1 = []
 
-            for each in np.unique(np_actions):
-                indices = np.argwhere(np_actions == each)
-                for each_ in indices:
-                    temp = np_player_payoffs[each_]
-                    temp1.append(temp)
-                    temp2 = sum(temp1) / len(indices)
-                    if temp2 >= highestpayoff:
-                        highestpayoff = temp2
-                        beststrategy = each
+        for each in np.unique(np_actions):
+            indices = np.argwhere(np_actions == each)
+            for each_ in indices:
+                temp = np_player_payoffs[each_]
+                temp1.append(temp)
+                temp2 = sum(temp1) / len(indices)
+                if temp2 >= highestpayoff:
+                    highestpayoff = temp2
+                    beststrategy = each
 
-            probarray = np.zeros(len(set(self.actionlist)) + 1)
+        probarray = np.zeros(len(set(self.actionlist)) + 1)
 
-            print(beststrategy, "beststrategy")
-            range_ = len(set(self.actionlist)) + 1
-            probarray[beststrategy] = self.prob
-            choiceindex = choice([i for i in range(0, range_) if i not in [beststrategy, -1]])
+        print(beststrategy, "beststrategy")
+        range_ = len(set(self.actionlist)) + 1
+        probarray[beststrategy] = self.prob
+        choiceindex = choice([i for i in range(0, range_) if i not in [beststrategy, -1]])
 
-            print(choiceindex, "epsilonindex")
-            probarray[choiceindex] = self.epsilon
+        print(choiceindex, "epsilonindex")
+        probarray[choiceindex] = self.epsilon
 
-            print(probarray, "probarray")
-            print(self.actions, "actions")
+        print(probarray, "probarray")
+        print(self.actions, "actions")
 
-            return np.random.choice(
-                [self.actions],
-                p=probarray
-            )
+        return np.random.choice(
+            [self.actions],
+            p=probarray
+        )
 
-        def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-            print(action, "update action")
-            self.actionlist.append(action)
-            self.payofflist.append(payoff)
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        print(action, "update action")
+        self.actionlist.append(action)
+        self.payofflist.append(payoff)
 
 
 
 
 class UCB(Strategy):
-        """Implements the Aselect (random play) algorithm."""
-        actions: List[Action]
+    """Implements the Aselect (random play) algorithm."""
+    actions: List[Action]
 
-        def __init__(self):
-            self.name = "UCB"
+    def __init__(self):
+        self.name = "UCB"
 
-        def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-            """Just save the actions as that's the only thing we need."""
-            self.actions = matrix_suite.get_actions(player)
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """Just save the actions as that's the only thing we need."""
+        self.actions = matrix_suite.get_actions(player)
 
-        def get_action(self, round_: int) -> Action:
-            """Pick the next action randomly from the possible actions."""
-            return random.choice(self.actions)
+    def get_action(self, round_: int) -> Action:
+        """Pick the next action randomly from the possible actions."""
+        return random.choice(self.actions)
 
-        def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-            """Aselect has no update mechanic."""
-            pass
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Aselect has no update mechanic."""
+        pass
 
 
 class Satisficing(Strategy):
-        """Implements the Satisficing (gamma=0.1) algorithm."""
-        alpha: float
-        gamma: float
-        actions: List[Action]
-        past_actions: List[Action]
-        past_payoffs: List[Payoff]
+    """Implements the Satisficing (gamma=0.1) algorithm."""
+    alpha: float
+    gamma: float
+    actions: List[Action]
+    past_actions: List[Action]
+    past_payoffs: List[Payoff]
 
-        def __init__(self):
-            self.name = "Satisficing Play"
+    def __init__(self):
+        self.name = "Satisficing Play"
 
-        def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-            self.actions = matrix_suite.get_actions(player)
-            self.alpha = 10  #TODO: change it to the current maximum payoff
-            self.gamma = 0.1
-            self.past_actions = []
-            self.past_payoffs = []
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        self.actions = matrix_suite.get_actions(player)
+        self.alpha = 10  #TODO: change it to the current maximum payoff
+        self.gamma = 0.1
+        self.past_actions = []
+        self.past_payoffs = []
 
-        def get_action(self, round_: int) -> Action:
-            """Exploit if the last action satisfies the aspiration level, otherwise explore."""
-            action: Action
+    def get_action(self, round_: int) -> Action:
+        """Exploit if the last action satisfies the aspiration level, otherwise explore."""
+        action: Action
 
-            if len(self.past_payoffs) == 0 or self.past_payoffs[-1] < self.alpha:
-                action = random.randint(0, len(self.actions)-1)
-            elif self.past_payoffs[-1] >= self.alpha:
-                action = self.actions[-1]
+        if len(self.past_payoffs) == 0 or self.past_payoffs[-1] < self.alpha:
+            action = random.randint(0, len(self.actions)-1)
+        elif self.past_payoffs[-1] >= self.alpha:
+            action = self.actions[-1]
 
-            return action
+        return action
 
-        def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-            """Aselect has no update mechanic."""
-            self.alpha = self.alpha * self.gamma + (1 - self.gamma) * payoff
-            self.past_actions.append(action)
-            self.past_payoffs.append(payoff)
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        self.alpha = self.alpha * self.gamma + (1 - self.gamma) * payoff
+        self.past_actions.append(action)
+        self.past_payoffs.append(payoff)
 
+
+class Bully(Strategy):
+    """Implements the Bully strategy algorithm."""
+    actions: List[Action]
+    bestAction: Action
+    player: int
+    opponent: int
+
+    def __init__(self):
+        self.name = "Bully"
+
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        self.actions = matrix_suite.get_actions(player)
+        self.player = 0 if player == "row" else 1
+        self.opponent = 1 - self.player
+        self.bestAction = self.find_best_action(matrix_suite)
+
+    def get_action(self, round_: int) -> Action:
+        """Stubbornly returns the action with the highest potential payoff"""
+        return self.bestAction
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Bully does not need any update"""
+        pass
+
+    def find_best_action(self, matrix_suite: MatrixSuite) -> Action:
+        player_actions = matrix_suite.get_actions("row" if self.player==0 else "col")
+        opponent_actions = matrix_suite.get_actions("row" if self.opponent==0 else "col")
+        max = 0
+
+        for player_action in player_actions:
+            total = 0
+            for opponent_action in opponent_actions:
+                if self.player == 0:
+                    ''' Row Player: summing through the left-hand payoffs of each row'''
+                    total += matrix_suite.get_payoffs(player_action, opponent_action)[self.player]
+                else:
+                    '''Column Player: summing through the right-hand payoffs of each column'''
+                    total += matrix_suite.get_payoffs(opponent_action, player_action)[self.player]
+            if total > max:
+                max = total
+                best_action = player_action
+
+        return best_action
 
 
