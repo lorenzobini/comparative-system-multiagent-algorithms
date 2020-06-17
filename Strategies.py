@@ -91,8 +91,8 @@ class Aselect(Strategy):
 
 # Add the other strategies below
 
-    class EGreedy(Strategy):
-        """Implements the Aselect (random play) algorithm."""
+class EGreedy(Strategy):
+        """Implements the EGreedy (probabilistic exploitation-exploration) algorithm."""
         actions: List[Action]
         payoffs: List[Payoff]
 
@@ -161,7 +161,7 @@ class Aselect(Strategy):
 
 
 
-    class UCB(Strategy):
+class UCB(Strategy):
         """Implements the Aselect (random play) algorithm."""
         actions: List[Action]
 
@@ -179,4 +179,42 @@ class Aselect(Strategy):
         def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
             """Aselect has no update mechanic."""
             pass
+
+
+class Satisficing(Strategy):
+        """Implements the Satisficing (gamma=0.1) algorithm."""
+        alpha: float
+        gamma: float
+        actions: List[Action]
+        past_actions: List[Action]
+        past_payoffs: List[Payoff]
+
+        def __init__(self):
+            self.name = "Satisficing Play"
+
+        def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+            self.actions = matrix_suite.get_actions(player)
+            self.alpha = 10  #TODO: change it to the current maximum payoff
+            self.gamma = 0.1
+            self.past_actions = []
+            self.past_payoffs = []
+
+        def get_action(self, round_: int) -> Action:
+            """Exploit if the last action satisfies the aspiration level, otherwise explore."""
+            action: Action
+
+            if len(self.past_payoffs) == 0 or self.past_payoffs[-1] < self.alpha:
+                action = random.randint(0, len(self.actions)-1)
+            elif self.past_payoffs[-1] >= self.alpha:
+                action = self.actions[-1]
+
+            return action
+
+        def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+            """Aselect has no update mechanic."""
+            self.alpha = self.alpha * self.gamma + (1 - self.gamma) * payoff
+            self.past_actions.append(action)
+            self.past_payoffs.append(payoff)
+
+
 

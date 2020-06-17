@@ -68,6 +68,7 @@ class MatrixSuite(metaclass=abc.ABCMeta):
         else:
             raise Exception("ERROR: *player* should be either 'row' of 'col', not '" + player + "'!")
 
+    # TODO: fix access from child class to all methods below
     def get_row_actions(self) -> List[Action]:
         """Return the actions of the row player.
         """
@@ -83,6 +84,17 @@ class MatrixSuite(metaclass=abc.ABCMeta):
         """
         return self.payoff_matrix[row_action][col_action]
 
+    def get_max_payoff(self, player: int) -> float:
+        """Return the maximum possible payoff for the specified player.
+        0 = row player
+        1 = column player
+        """
+        max_payoff = 0
+        for payoffs in self.payoff_matrix:
+            if payoffs[player] > max:
+                max_payoff = payoffs[player]
+
+        return max_payoff
 
 
 
@@ -179,8 +191,6 @@ class RandomIntMatrixSuite(MatrixSuite):
         self.row_actions = list(range(n_row))
         self.col_actions = list(range(n_col))
         self.payoff_matrix = matrix
-
-
 
 
 
