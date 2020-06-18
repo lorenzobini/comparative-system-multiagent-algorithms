@@ -6,7 +6,9 @@
 import abc
 import random
 import numpy as np
-from typing import List, Dict
+from numpy.random import choice
+from typing import List
+from operator import sub
 
 from MatrixSuite import Action, Payoff
 from MatrixSuite import MatrixSuite
@@ -243,7 +245,7 @@ class Bully(Strategy):
     def find_best_action(self, matrix_suite: MatrixSuite) -> Action:
         player_actions = matrix_suite.get_actions("row" if self.player==0 else "col")
         opponent_actions = matrix_suite.get_actions("row" if self.opponent==0 else "col")
-        max = 0
+        max_payoff = 0
 
         for player_action in player_actions:
             total = 0
@@ -254,8 +256,8 @@ class Bully(Strategy):
                 else:
                     '''Column Player: summing through the right-hand payoffs of each column'''
                     total += matrix_suite.get_payoffs(opponent_action, player_action)[self.player]
-            if total > max:
-                max = total
+            if total > max_payoff:
+                max_payoff = total
                 best_action = player_action
 
         return best_action
@@ -291,7 +293,6 @@ class FictitiousPlay(Strategy):
         elif len(self.most_frequent_actions) == 1:
             action = self.find_best_response(self.most_frequent_actions[0])
         else:
-            # TODO: do we just have to return a random response? Or the best response to a randomly picked opp choice?
             action = self.find_best_response(random.choice(self.most_frequent_actions))
 
         return action
@@ -303,18 +304,18 @@ class FictitiousPlay(Strategy):
 
     def find_most_frequent_actions(self) -> List[Action]:
         """Determines the action(s) that  is(are) most frequently chosen by the opponent"""
-        max = 0
+        max_payoff = 0
         most_frequent_actions = []
         for action in range(0, len(self.opponent_actions)-1):
-            if self.opp_action_frequency[action] > max:
+            if self.opp_action_frequency[action] > max_payoff:
                 most_frequent_actions = [action]
-            elif self.opp_action_frequency[action] == max:
+            elif self.opp_action_frequency[action] == max_payoff:
                 most_frequent_actions.append(action)
 
         return most_frequent_actions
 
     def find_best_response(self, opp_action: Action) -> Action:
-        max = 0
+        max_payoff = 0
         best_response = random.choice(self.actions)
 
         for action in self.actions:
@@ -325,12 +326,69 @@ class FictitiousPlay(Strategy):
                 '''Column Player: given a row, determine the action with the highest payoff'''
                 payoff = self.matrix_suite.get_payoffs(opp_action, action)[self.player]
 
-            if payoff > max:
-                max = payoff
+            if payoff > max_payoff:
+                max_payoff = payoff
                 best_response = action
 
         return best_response
 
 
+class ProportionalRegretMatching(Strategy):
+    """Implements the Proportional Regret Matching algorithm for no-regret"""
+    actions: List[Action]
+    player: int
+    opponent: int
+    actual_payoff: Payoff
+    potential_payoffs: List[Payoff]
+    regret_matching: List[float]
+    matrix_suite: MatrixSuite
 
+    def __init__(self):
+        self.name = "Proportional Regret Matching"
+
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        self.player = 0 if player == "row" else 1
+        self.opponent = 1 - self.player
+        self.actions = matrix_suite.get_actions(player)
+        self.matrix_suite = matrix_suite
+        self.actual_payoff = 0
+        self.potential_payoffs = [0 for action in self.actions]
+        self.regret_matching = [0 for action in self.actions]
+
+    def get_action(self, round_: int) -> Action:
+        """Returns new action according to regret matching probability distribution"""
+        if all(prob == 0 for prob in self.regret_matching):
+            action = random.choice(self.actions)
+        else:
+            action = np.random.choice(self.actions, p=self.regret_matching)
+
+        return action
+
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Updating payoffs and regret"""
+        total_regret = 0
+
+        self.actual_payoff += payoff
+        for player_action in self.actions:
+            if self.player == 0:
+                ''' Row Player: we consider the left-hand side of the payoffs'''
+                self.potential_payoffs[player_action] += self.matrix_suite.get_payoffs(player_action, opp_action)[self.player]
+            else:
+                ''' Row Player: we consider the right-hand side of the payoffs'''
+                self.potential_payoffs[player_action] += self.matrix_suite.get_payoffs(opp_action, player_action)[self.player]
+
+        for potential_payoff in self.potential_payoffs:
+            """ Regret subsists only when potential payoff is higher than actual payoff """
+            if potential_payoff > self.actual_payoff:
+                total_regret += potential_payoff - self.actual_payoff
+
+        if total_regret != 0:
+            self.regret_matching = [(potential_payoff - self.actual_payoff) / total_regret
+                                    for potential_payoff in self.potential_payoffs]
+
+            # check for negative payoffs and set them to 0 probability
+            for player_action in self.actions:
+                if self.regret_matching[player_action] < 0:
+                    self.regret_matching[player_action] = 0
 
