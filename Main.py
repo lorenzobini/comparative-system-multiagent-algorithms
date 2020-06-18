@@ -28,7 +28,7 @@ print("BEGIN  ########################################\n")
 
 matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.FictitiousPlay()  # Create the strategy you want to test.
+row_strat = Strategies.Satisficing()  # Create the strategy you want to test.
 col_strat = Strategies.FictitiousPlay()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")

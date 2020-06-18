@@ -194,7 +194,7 @@ class Satisficing(Strategy):
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         self.actions = matrix_suite.get_actions(player)
-        self.alpha = 10  #TODO: change it to the current maximum payoff
+        self.alpha = 1 + matrix_suite.get_max_payoff(0 if player == "row" else 1)
         self.gamma = 0.1
         self.past_actions = []
         self.past_payoffs = []
