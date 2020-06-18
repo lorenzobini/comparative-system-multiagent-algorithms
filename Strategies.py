@@ -6,7 +6,7 @@
 import abc
 import random
 import numpy as np
-from typing import List
+from typing import List, Dict
 
 from MatrixSuite import Action, Payoff
 from MatrixSuite import MatrixSuite
@@ -259,5 +259,78 @@ class Bully(Strategy):
                 best_action = player_action
 
         return best_action
+
+
+class FictitiousPlay(Strategy):
+    """Implements the Fictitious Play algorithm"""
+    actions: List[Action]
+    player: int
+    opponent: int
+    opponent_actions: List[Action]
+    opp_action_frequency: List[int]
+    most_frequent_actions: List[int]
+    matrix_suite: MatrixSuite
+
+    def __init__(self):
+        self.name = "Fictitious Play"
+
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        self.player = 0 if player == "row" else 1
+        self.opponent = 1 - self.player
+        self.actions = matrix_suite.get_actions(player)
+        self.matrix_suite = matrix_suite
+        self.opponent_actions = matrix_suite.get_actions("row" if player == "col" else "col")
+        self.opp_action_frequency = [0 for action in self.opponent_actions]
+        self.most_frequent_actions = []
+
+    def get_action(self, round_: int) -> Action:
+        """Returns the best response at the opponent's most chosen action"""
+
+        if len(self.most_frequent_actions) == 0:
+            action = random.choice(self.actions)
+        elif len(self.most_frequent_actions) == 1:
+            action = self.find_best_response(self.most_frequent_actions[0])
+        else:
+            # TODO: do we just have to return a random response? Or the best response to a randomly picked opp choice?
+            action = self.find_best_response(random.choice(self.most_frequent_actions))
+
+        return action
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Updating frequency table"""
+        self.opp_action_frequency[opp_action] += 1
+        self.most_frequent_actions = self.find_most_frequent_actions()
+
+    def find_most_frequent_actions(self) -> List[Action]:
+        """Determines the action(s) that  is(are) most frequently chosen by the opponent"""
+        max = 0
+        most_frequent_actions = []
+        for action in range(0, len(self.opponent_actions)-1):
+            if self.opp_action_frequency[action] > max:
+                most_frequent_actions = [action]
+            elif self.opp_action_frequency[action] == max:
+                most_frequent_actions.append(action)
+
+        return most_frequent_actions
+
+    def find_best_response(self, opp_action: Action) -> Action:
+        max = 0
+        best_response = random.choice(self.actions)
+
+        for action in self.actions:
+            if self.player == 0:
+                ''' Row Player: given a column, determine the action with the highest payoff'''
+                payoff = self.matrix_suite.get_payoffs(action, opp_action)[self.player]
+            else:
+                '''Column Player: given a row, determine the action with the highest payoff'''
+                payoff = self.matrix_suite.get_payoffs(opp_action, action)[self.player]
+
+            if payoff > max:
+                max = payoff
+                best_response = action
+
+        return best_response
+
+
 
 

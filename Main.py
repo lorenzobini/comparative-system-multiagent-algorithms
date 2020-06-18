@@ -26,17 +26,17 @@ print(grand_table)
 print("BEGIN  ########################################\n")
 
 
-matrix_suite = FixedMatrixSuite()  # Create a matrix suite
+matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.Bully()  # Create the strategy you want to test.
-col_strat = Strategies.Bully()
+row_strat = Strategies.FictitiousPlay()  # Create the strategy you want to test.
+col_strat = Strategies.FictitiousPlay()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
 for round in range(0, 10):
     row_action = row_strat.get_action(round)  # Get the next action
     col_action = col_strat.get_action(round)
-    print("Col plays action:" + col_action.__repr__())
+    print("Row plays action:" + row_action.__repr__())
 
     row_payoff, col_payoff = matrix_suite.get_payoffs(row_action, col_action)
 
