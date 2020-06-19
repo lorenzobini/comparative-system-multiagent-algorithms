@@ -37,7 +37,7 @@ class ReplicatorDynamic:
         plt.show()
 
     def check_stability(self, old_proportions, new_proportions) -> bool:
-        delta = 0.01
+        delta = 0.001
         diff = new_proportions - old_proportions
         diff = abs(diff)
 

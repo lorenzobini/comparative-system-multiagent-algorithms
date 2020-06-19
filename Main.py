@@ -20,6 +20,9 @@ grand_table.play_games()
 print(grand_table)
 
 replicator_dynamic.run([0.2,0.3,0.5])
+print("Gambit test result:")
+Nash.nash_equilibria(strategies, grand_table)
+'''
 
 ############# TEST AREA
 print("BEGIN  ########################################\n")
@@ -92,3 +95,5 @@ Nash.run_gambit(strategies, m)
 #  Aselect: ---- | ---- |
 #  Aselect: 1.00 | ---- |
 # ======================|
+
+'''
