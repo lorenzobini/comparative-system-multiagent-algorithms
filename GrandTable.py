@@ -92,6 +92,7 @@ class GrandTable:
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
 
     def play_games(self) -> None:
+        # TODO: description
         for row_strategy in range(0, len(self.row_strategies)):
             for col_strategy in range(0, len(self.col_strategies)):
                 game = self.games[row_strategy][col_strategy]

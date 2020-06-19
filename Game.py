@@ -60,6 +60,7 @@ class Game:
         self.col_player.initialize(self.matrix_suite, "col")
 
     def play_round(self, round):
+        # TODO: description
         row_action = self.row_player.get_action(0)  # Get the next action
         col_action = self.col_player.get_action(0)
 
@@ -74,7 +75,7 @@ class Game:
         self.row_player.update(round, row_action, row_payoff, col_action)
 
     def play(self) -> float:
-
+        # TODO: description
         for round in range(0, 999):
             self.play_round(round)
 

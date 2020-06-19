@@ -38,6 +38,7 @@ class ReplicatorDynamic:
         plt.show()
 
     def check_stability(self, old_proportions, new_proportions) -> bool:
+        # TODO: description
         delta = 0.001
         diff = new_proportions - old_proportions
         diff = abs(diff)
@@ -53,7 +54,7 @@ class ReplicatorDynamic:
         self.rounds.append(round)
 
     def run(self, proportions: List[float]) -> None:
-
+        # TODO: description
         score_table = np.array(self.grand_table.grand_table)
         prop_vector = np.array(proportions)
         round = 0

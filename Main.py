@@ -20,6 +20,10 @@ strategies_ext = strategies.append(Strategies.Custom())  #TODO: replace name
 proportions = [Proportions.uniform_without_own_strat, Proportions.non_uniform_without_own_strat]
 proportions_ext = [Proportions.uniform_with_own_strat, Proportions.non_uniform_with_own_strat]
 
+
+# TODO: CONSIDER REFACTORING
+
+
 print("==============================================\n")
 
 print("FIRST GAME: Standard set of strategies, Fixed Matrix Suite \n")

@@ -162,7 +162,7 @@ class FixedMatrixSuite(MatrixSuite):
 # Add the other game suites below
 
 class RandomIntMatrixSuite(MatrixSuite):
-
+    # TODO: description ?
     def __init__(self) -> None:
         self.name = "Random Int Matrix Suite"
 
@@ -196,7 +196,7 @@ class RandomIntMatrixSuite(MatrixSuite):
 
 
 class RandomFloatMatrixSuite(MatrixSuite):
-
+    # TODO: description ?
     def __init__(self) -> None:
         self.name = "Random Float Matrix Suite"
 
