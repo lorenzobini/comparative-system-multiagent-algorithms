@@ -92,13 +92,17 @@ class GrandTable:
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
 
     def play_games(self) -> None:
-        for row_strategy in range[0:len(self.row_strategies)]:
-            for col_strategy in range[0:len(self.col_strategies)]:
+        for row_strategy in range(0, len(self.row_strategies)):
+            for col_strategy in range(0, len(self.col_strategies)):
                 game = self.games[row_strategy][col_strategy]
 
-                for session in range[1: self.restarts]:
-                    payoff = game.play(self.rounds, session)
+                for session in range(1, self.restarts-1):
+                    if session > 0:  # The first matrix is already initialised
+                        # TODO: fix issue with FixedMatrix index out of bounds
+                        game.matrix_suite.generate_new_payoff_matrix()
+                    payoff = game.play()
                     self.grand_table[row_strategy][col_strategy] += payoff
+
 
                 self.grand_table[row_strategy][col_strategy] /= self.restarts
 

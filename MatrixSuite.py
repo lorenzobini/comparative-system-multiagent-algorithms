@@ -138,6 +138,7 @@ class FixedMatrixSuite(MatrixSuite):
                         [(5, 5), (8, 2), (0, 10), (8, 2)], [(1, 9), (4, 6), (7, 3), (6, 4)]])
         }
 
+
         self.generate_new_payoff_matrix()
 
     def __repr__(self) -> str:

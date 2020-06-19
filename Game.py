@@ -5,7 +5,7 @@
 from typing import List
 
 import MatrixSuite
-from Strategies import Strategy
+from Strategies import  Strategy
 from MatrixSuite import Payoff, Action
 
 
@@ -59,21 +59,27 @@ class Game:
         self.row_player.initialize(self.matrix_suite, "row")
         self.col_player.initialize(self.matrix_suite, "col")
 
-    # Add methods that implement the logic of playing a game, so play one round and play x rounds.
-
     def play_round(self, round):
-        action = self.row_player.get_action(0)  # Get the next action
-        action1 = self.col_player.get_action(0)
+        row_action = self.row_player.get_action(0)  # Get the next action
+        col_action = self.col_player.get_action(0)
 
-        self.row_player_actions.append(action)
-        self.col_player_actions.append(action1)
+        self.row_player_actions.append(row_action)
+        self.col_player_actions.append(col_action)
 
-        self.row_player_payoffs.append(self.matrix_suite.matrices[round][2][action][action1][0])
-        self.col_player_payoffs.append(self.matrix_suite.matrices[round][2][action][action1][1])
+        row_payoff, col_payoff = self.matrix_suite.get_payoffs(row_action, col_action)
 
-    def play_game(self, round):
-        for i in range(0, 999):
+        self.row_player_payoffs.append(row_payoff)
+        self.col_player_payoffs.append(col_payoff)
+
+        self.row_player.update(round, row_action, row_payoff, col_action)
+
+    def play(self) -> float:
+
+        for round in range(0, 999):
             self.play_round(round)
+
         avgrow = sum(self.row_player_payoffs) / len(self.row_player_payoffs)
+
         return avgrow
 
+    # Add methods that implement the logic of playing a game, so play one round and play x rounds.

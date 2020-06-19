@@ -7,20 +7,17 @@ from MatrixSuite import RandomFloatMatrixSuite
 import Strategies
 import Game
 from GrandTable import GrandTable
-from ReplicatorDynamic import ReplicatorDynamic
+from ReplicatorDynamic import ReplicatorDynamic, Proportions
 import Nash
 
 # Output some basic things to show how to call the classes.
 matrix_suite = FixedMatrixSuite()
-print(matrix_suite)
 strategies = [Strategies.Aselect(), Strategies.Aselect(), Strategies.Aselect()]
-print(strategies)
 grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
-print(grand_table)
 
-#table = grand_table.play_games()
+table = grand_table.play_games()
 
-
+ReplicatorDynamic.run(table, strategies)
 
 ############# TEST AREA
 print("BEGIN  ########################################\n")
