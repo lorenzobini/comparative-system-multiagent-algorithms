@@ -30,6 +30,7 @@ class ReplicatorDynamic:
 
     def to_graph(self):
         """Visualize the evolution of proportions."""
+        # TODO: make a legend make it presentable
         for strategy in self.history:
             plt.plot(self.rounds, strategy, linewidth=2, color=np.random.rand(3,))
 

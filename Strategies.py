@@ -183,6 +183,26 @@ class UCB(Strategy):
         pass
 
 
+class Softmax(Strategy):
+    """Implements the Aselect (random play) algorithm."""
+    actions: List[Action]
+
+    def __init__(self):
+        self.name = "UCB"
+
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """Just save the actions as that's the only thing we need."""
+        self.actions = matrix_suite.get_actions(player)
+
+    def get_action(self, round_: int) -> Action:
+        """Pick the next action randomly from the possible actions."""
+        return random.choice(self.actions)
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Aselect has no update mechanic."""
+        pass
+
+
 class Satisficing(Strategy):
     """Implements the Satisficing (gamma=0.1) algorithm."""
     alpha: float
@@ -392,3 +412,25 @@ class ProportionalRegretMatching(Strategy):
                 if self.regret_matching[player_action] < 0:
                     self.regret_matching[player_action] = 0
 
+
+'''Custom Strategy'''
+
+
+class Custom(Strategy):
+    """Implements the Aselect (random play) algorithm."""
+    actions: List[Action]
+
+    def __init__(self):
+        self.name = "UCB"
+
+    def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """Just save the actions as that's the only thing we need."""
+        self.actions = matrix_suite.get_actions(player)
+
+    def get_action(self, round_: int) -> Action:
+        """Pick the next action randomly from the possible actions."""
+        return random.choice(self.actions)
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Aselect has no update mechanic."""
+        pass

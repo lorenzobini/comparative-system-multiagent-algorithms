@@ -98,7 +98,6 @@ class GrandTable:
 
                 for session in range(1, self.restarts-1):
                     if session > 1:  # The first matrix is already initialised
-                        # TODO: fix issue with FixedMatrix index out of bounds
                         game.matrix_suite.generate_new_payoff_matrix()
                     payoff = game.play()
                     self.grand_table[row_strategy][col_strategy] += payoff

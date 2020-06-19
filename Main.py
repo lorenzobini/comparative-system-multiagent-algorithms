@@ -10,18 +10,113 @@ from GrandTable import GrandTable
 from ReplicatorDynamic import ReplicatorDynamic, Proportions
 import Nash
 
-# Output some basic things to show how to call the classes.
+
+
+''' Setting up strategies and relative proportions '''
+strategies = [Strategies.Aselect(), Strategies.EGreedy(), Strategies.UCB(), Strategies.Satisficing(),
+              Strategies.Softmax(), Strategies.FictitiousPlay(), Strategies.Bully,
+              Strategies.ProportionalRegretMatching()]
+strategies_ext = strategies.append(Strategies.Custom())  #TODO: replace name
+proportions = [Proportions.uniform_without_own_strat, Proportions.non_uniform_without_own_strat]
+proportions_ext = [Proportions.uniform_with_own_strat, Proportions.non_uniform_with_own_strat]
+
+print("==============================================\n")
+
+print("FIRST GAME: Standard set of strategies, Fixed Matrix Suite \n")
 matrix_suite = FixedMatrixSuite()
-strategies = [Strategies.ProportionalRegretMatching(), Strategies.Bully(), Strategies.FictitiousPlay()]
 grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
-replicator_dynamic = ReplicatorDynamic(grand_table)
 
 grand_table.play_games()
 print(grand_table)
 
-replicator_dynamic.run([0.2,0.3,0.5])
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions:
+    replicator_dynamic.run(proportion)
+
 print("Gambit test result:")
 Nash.nash_equilibria(strategies, grand_table)
+
+print("==============================================\n")
+
+print("SECOND GAME: Extended set of strategies, Fixed Matrix Suite \n")
+grand_table = GrandTable(matrix_suite, strategies_ext, 9, 1000)
+
+grand_table.play_games()
+print(grand_table)
+
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions_ext:
+    replicator_dynamic.run(proportion)
+
+print("Gambit test result:")
+Nash.nash_equilibria(strategies_ext, grand_table)
+
+print("==============================================\n")
+
+print("THIRD GAME: Standard set of strategies, Random Int Matrix Suite \n")
+matrix_suite = RandomIntMatrixSuite()
+grand_table = GrandTable(matrix_suite, strategies, 19, 1000)
+
+grand_table.play_games()
+print(grand_table)
+
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions:
+    replicator_dynamic.run(proportion)
+
+print("Gambit test result:")
+Nash.nash_equilibria(strategies, grand_table)
+
+print("==============================================\n")
+
+print("FOURTH GAME: Extended set of strategies, Fixed Random Int Suite \n")
+grand_table = GrandTable(matrix_suite, strategies_ext, 19, 1000)
+
+grand_table.play_games()
+print(grand_table)
+
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions_ext:
+    replicator_dynamic.run(proportion)
+
+print("Gambit test result:")
+Nash.nash_equilibria(strategies_ext, grand_table)
+
+print("==============================================\n")
+
+print("THIRD GAME: Standard set of strategies, Random Float Matrix Suite \n")
+matrix_suite = RandomFloatMatrixSuite()
+grand_table = GrandTable(matrix_suite, strategies, 19, 1000)
+
+grand_table.play_games()
+print(grand_table)
+
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions:
+    replicator_dynamic.run(proportion)
+
+print("Gambit test result:")
+Nash.nash_equilibria(strategies, grand_table)
+
+print("==============================================\n")
+
+print("FOURTH GAME: Extended set of strategies, Fixed Random Float Suite \n")
+grand_table = GrandTable(matrix_suite, strategies_ext, 19, 1000)
+
+grand_table.play_games()
+print(grand_table)
+
+replicator_dynamic = ReplicatorDynamic(grand_table)
+for proportion in proportions_ext:
+    replicator_dynamic.run(proportion)
+
+print("Gambit test result:")
+Nash.nash_equilibria(strategies_ext, grand_table)
+
+print("==============================================\n")
+
+
+
 '''
 
 ############# TEST AREA
