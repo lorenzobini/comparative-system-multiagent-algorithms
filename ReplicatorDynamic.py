@@ -19,12 +19,14 @@ class Proportions:
 
 class ReplicatorDynamic:
 
-    history = List[List[float]]
-    rounds = List[int]
+    history: List[List[float]]
+    rounds: List[int]
+    grand_table: GrandTable
 
-    def __init__(self, start_proportions: List[float], grand_table: GrandTable):
-        history = [[] for i in grand_table.row_strategies]
-        rounds = []
+    def __init__(self, grand_table: GrandTable):
+        self.history = [[] for i in grand_table.row_strategies]
+        self.grand_table = grand_table
+        self.rounds = []
 
     def to_graph(self):
         """Visualize the evolution of proportions."""
@@ -32,6 +34,7 @@ class ReplicatorDynamic:
             plt.plot(self.rounds, strategy, linewidth=2, color=np.random.rand(3,))
 
         plt.legend()
+        plt.show()
 
     def check_stability(self, old_proportions, new_proportions) -> bool:
         delta = 0.01
@@ -48,9 +51,9 @@ class ReplicatorDynamic:
             self.history[i].append(proportions[i])
         self.rounds.append(round)
 
-    def run(self, grand_table: GrandTable, proportions: List[float]) -> None:
+    def run(self, proportions: List[float]) -> None:
 
-        score_table = np.array(grand_table.grand_table)
+        score_table = np.array(self.grand_table.grand_table)
         prop_vector = np.array(proportions)
         round = 0
 

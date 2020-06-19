@@ -48,7 +48,7 @@ class GrandTable:
         self.row_strategies = strategies
         self.col_strategies = copy.deepcopy(strategies)
         self.matrix_suite = matrix_suite
-        self.games = [[Game(self.matrix_suite, row_player, col_player)
+        self.games = [[Game(copy.deepcopy(self.matrix_suite), row_player, col_player)
                        for col_player in self.col_strategies]
                       for row_player in self.row_strategies]
         self.grand_table = [[0
@@ -97,7 +97,7 @@ class GrandTable:
                 game = self.games[row_strategy][col_strategy]
 
                 for session in range(1, self.restarts-1):
-                    if session > 0:  # The first matrix is already initialised
+                    if session > 1:  # The first matrix is already initialised
                         # TODO: fix issue with FixedMatrix index out of bounds
                         game.matrix_suite.generate_new_payoff_matrix()
                     payoff = game.play()

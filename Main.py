@@ -12,12 +12,14 @@ import Nash
 
 # Output some basic things to show how to call the classes.
 matrix_suite = FixedMatrixSuite()
-strategies = [Strategies.Aselect(), Strategies.Aselect(), Strategies.Aselect()]
+strategies = [Strategies.ProportionalRegretMatching(), Strategies.Bully(), Strategies.FictitiousPlay()]
 grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
+replicator_dynamic = ReplicatorDynamic(grand_table)
 
-table = grand_table.play_games()
+grand_table.play_games()
+print(grand_table)
 
-ReplicatorDynamic.run(table, strategies)
+replicator_dynamic.run([0.2,0.3,0.5])
 
 ############# TEST AREA
 print("BEGIN  ########################################\n")
