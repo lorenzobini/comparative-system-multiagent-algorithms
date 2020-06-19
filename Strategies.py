@@ -4,6 +4,7 @@
 #  you can save it to Class attributes of your strategy. (like the *actions* attribute of Aselect)
 
 import abc
+import math
 import random
 import numpy as np
 from numpy.random import choice
@@ -107,11 +108,11 @@ class EGreedy(Strategy):
         self.payofflist = []
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        """Just save the actions as that's the only thing we need."""
         self.actions = matrix_suite.get_actions(player)
 
     def get_action(self, round_: int) -> Action:
-        print(round_)
+        # TODO: description
+
         if (round_ == 1):
             return random.choice(self.actions)
 
@@ -120,10 +121,6 @@ class EGreedy(Strategy):
 
         np_player_payoffs = np.asarray(self.payofflist, dtype=np.float32)
         np_actions = np.asarray(self.actionlist, dtype=np.int)
-
-        print(len(self.actionlist), "actionlist elements")
-        print(len(self.payofflist), "payofflist elements")
-        print(highestpayoff, "highestpayoff")
 
         temp1 = []
 
@@ -139,16 +136,11 @@ class EGreedy(Strategy):
 
         probarray = np.zeros(len(set(self.actionlist)) + 1)
 
-        print(beststrategy, "beststrategy")
         range_ = len(set(self.actionlist)) + 1
         probarray[beststrategy] = self.prob
         choiceindex = choice([i for i in range(0, range_) if i not in [beststrategy, -1]])
 
-        print(choiceindex, "epsilonindex")
         probarray[choiceindex] = self.epsilon
-
-        print(probarray, "probarray")
-        print(self.actions, "actions")
 
         return np.random.choice(
             [self.actions],
@@ -156,7 +148,6 @@ class EGreedy(Strategy):
         )
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        print(action, "update action")
         self.actionlist.append(action)
         self.payofflist.append(payoff)
 
@@ -164,43 +155,75 @@ class EGreedy(Strategy):
 
 
 class UCB(Strategy):
-    """Implements the Aselect (random play) algorithm."""
+    """Implements the UCB algorithm."""
     actions: List[Action]
 
     def __init__(self):
         self.name = "UCB"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        """Just save the actions as that's the only thing we need."""
         self.actions = matrix_suite.get_actions(player)
+        self.actionlist = []
+        self.payofflist = []
 
     def get_action(self, round_: int) -> Action:
-        """Pick the next action randomly from the possible actions."""
-        return random.choice(self.actions)
+        # TODO: description
+        if round_ == 1:
+            return random.choice(self.actions)
+
+        avgscores = np.zeros(len(self.actions))
+        for each in set(self.actionlist):
+            indices = [i for i, j in enumerate(self.actionlist) if j == each]
+            avg = sum([self.payofflist[i] for i in indices]) / len(indices)
+            print (avg, "avg")
+            avgscores[each] = avg
+
+        for each in set(self.actionlist):
+            indices = len([i for i, j in enumerate(self.actionlist) if j == each])
+            avgscores[each] = avgscores[each] + math.sqrt((2*math.log(round_)) / indices)
+
+        return self.actions[avgscores.index(max(avgscores))]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        """Aselect has no update mechanic."""
-        pass
+        # TODO: description
+        self.actionlist.append(action)
+        self.payofflist.append(payoff)
 
 
 class Softmax(Strategy):
-    """Implements the Aselect (random play) algorithm."""
+    """Implements the Softmax algorithm."""
     actions: List[Action]
+    qmatrix: np.ndarray
+    learning_rate:float
+    discount: float
+    payoff: float
 
     def __init__(self):
-        self.name = "UCB"
+        self.name = "Softmax"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        """Just save the actions as that's the only thing we need."""
+        # TODO: description
         self.actions = matrix_suite.get_actions(player)
+        self.qmatrix = np.zeros(len(self.actions))
+        self.learning_rate = 0.1
+        self.discount = 0.0
+        self.payoff = 0.0
 
     def get_action(self, round_: int) -> Action:
-        """Pick the next action randomly from the possible actions."""
-        return random.choice(self.actions)
+        # TODO: description
+        if round_ == 1:
+            return random.choice(self.actions)
+        maxq = np.max(self.qmatrix)
+        for each in self.actions:
+            curq = self.qmatrix[each]
+            self.qmatrix[each] = (1-self.learningrate) * curq + self.learningrate * (self.payoff + self.discount * maxq)
+        #normalize
+        for i in range (0, len(self.qmatrix)):
+            self.qmatrix[i] = self.qmatrix[i] / sum(self.qmatrix)
+
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        """Aselect has no update mechanic."""
-        pass
+        self.payoff = payoff
 
 
 class Satisficing(Strategy):
@@ -233,6 +256,7 @@ class Satisficing(Strategy):
         return action
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        # TODO: description
         self.alpha = self.alpha * self.gamma + (1 - self.gamma) * payoff
         self.past_actions.append(action)
         self.past_payoffs.append(payoff)
@@ -263,6 +287,7 @@ class Bully(Strategy):
         pass
 
     def find_best_action(self, matrix_suite: MatrixSuite) -> Action:
+        # TODO: description
         player_actions = matrix_suite.get_actions("row" if self.player==0 else "col")
         opponent_actions = matrix_suite.get_actions("row" if self.opponent==0 else "col")
         max_payoff = 0
@@ -297,6 +322,7 @@ class FictitiousPlay(Strategy):
         self.name = "Fictitious Play"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        # TODO: description
         self.player = 0 if player == "row" else 1
         self.opponent = 1 - self.player
         self.actions = matrix_suite.get_actions(player)
@@ -335,6 +361,7 @@ class FictitiousPlay(Strategy):
         return most_frequent_actions
 
     def find_best_response(self, opp_action: Action) -> Action:
+        # TODO: description
         max_payoff = 0
         best_response = random.choice(self.actions)
 
@@ -367,6 +394,7 @@ class ProportionalRegretMatching(Strategy):
         self.name = "Proportional Regret Matching"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        # TODO: description
         self.player = 0 if player == "row" else 1
         self.opponent = 1 - self.player
         self.actions = matrix_suite.get_actions(player)
