@@ -22,9 +22,11 @@ from Strategies import Strategy
 from Utils import flatten, transpose
 
 
-def nash_equilibria(grand_table: GrandTable) -> None:
+def nash_equilibria(strategies: List[Strategy], grand_table: GrandTable) -> None:
     """Go from the GrandTable to a call to run_gambit.
     :param grand_table: The calculated Grand Table"""
+    grand_table = GrandTable.grand_table
+    run_gambit(strategies, grand_table)
     pass
 
 
