@@ -81,7 +81,14 @@ class MatrixSuite(metaclass=abc.ABCMeta):
     def get_payoffs(self, row_action: int, col_action: int) -> Tuple[float, float]:
         """Return the payoffs of both players given their respective actions.
         """
-        return self.payoff_matrix[row_action][col_action]
+        value = 0.0
+        try:
+            value = self.payoff_matrix[row_action][col_action]
+        except:
+            print(self.payoff_matrix)
+            print(str(row_action), str(col_action))
+
+        return value
 
     def get_max_payoff(self, player: int) -> float:
         """Return the maximum possible payoff for the specified player.

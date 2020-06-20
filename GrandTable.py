@@ -95,42 +95,25 @@ class GrandTable:
         path = path = os.path.dirname(__file__) + "\\grand_tables\\" + filename + ".txt"
         f = open(path, "w+")
 
-        f.write("\\begin{tabular}{|" + "l|" * (len(self.col_strategies)+2) + "}\n")
+        f.write("\\begin{tabular}{|" + "c|" * (len(self.col_strategies)+2) + "}\n")
         f.write("\\hline\n")
 
         header = ""
         for strat in self.col_strategies:
-            header += " & " + strat.name
-        header += " & MEAN \\\\ \\hline \n"
+            header += " & \\textit{" + strat.name + "}"
+        header += " & \\textbf{MEAN} \\\\ \\hline \n"
         f.write(header)
 
         for i, row in enumerate(self.grand_table):
             # Add the name of the strategy to the row.
-            out = self.row_strategies[i].name
+            out = "\\textit{" + self.row_strategies[i].name + "}"
             for score in row:
-                out += " & " + str(round(score, 3))
-            out += " & " + str(round(mean(row), 3)) + " \\\\ \\hline \n"
+                out += " & " + str(round(score, 2))
+            out += " & " + str(round(mean(row), 2)) + " \\\\ \\hline \n"
             f.write(out)
 
         f.write("\\end{tabular}")
-
-
-
-
-        '''
-        \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
-        \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-         &  &  &  &  &  &  &  &  &  \\ \hline
-        \end{tabular}
-        '''
+        f.close()
 
 
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
@@ -151,6 +134,7 @@ class GrandTable:
                     game.initialize(game.matrix_suite)
                     if restart > 0:  # The first matrix is already initialised
                         game.matrix_suite.generate_new_payoff_matrix()
+                        game.initialize(game.matrix_suite)
                     payoff = game.play(self.rounds)
                     self.grand_table[row_strategy][col_strategy] += payoff
 

@@ -58,8 +58,7 @@ def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strat
     print("Gambit test result:")
     Nash.nash_equilibria(strategies, grand_table)
 
-game_session(1, FixedMatrixSuite(), strategies, proportions, 1)
-'''
+
 # FIRST GAME:Standard set of strategies, Fixed Matrix Suite
 game_session(1, FixedMatrixSuite(), strategies, proportions, 9)
 # SECOND GAME: Extended set of strategies, Fixed Matrix Suite
@@ -74,7 +73,7 @@ game_session(5, RandomFloatMatrixSuite(), strategies, proportions, 19)
 game_session(6, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
-
+'''
 
 ############# TEST AREA
 print("BEGIN  ########################################\n")

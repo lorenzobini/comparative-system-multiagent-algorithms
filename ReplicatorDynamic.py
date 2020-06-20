@@ -28,18 +28,18 @@ class ReplicatorDynamic:
         self.grand_table = grand_table
         self.rounds = []
 
-    def to_graph(self, name: str):
+    def to_graph(self, name: str): # TODO: fix overlapping
         """Visualize the evolution of proportions."""
         i = 0
         path = os.path.dirname(__file__)
-
+        plt.figure()
         for strategy in self.history:
             plt.plot(self.rounds, strategy, linewidth=2, color=np.random.rand(3,),
                      label=self.grand_table.row_strategies[i].name)
             i += 1
         plt.legend(loc='upper center', ncol=3, bbox_to_anchor=(0.5, 1.15), prop={'size': 6})
         plt.savefig(path + "\\img\\" + name + ".png")
-        plt.show()
+        #plt.show()
 
 
 

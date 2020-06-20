@@ -248,7 +248,7 @@ class Satisficing(Strategy):
     past_payoffs: List[Payoff]
 
     def __init__(self):
-        self.name = "Satisficing Play"
+        self.name = "Satisficing"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         self.actions = matrix_suite.get_actions(player)
@@ -333,7 +333,7 @@ class FictitiousPlay(Strategy):
     matrix_suite: MatrixSuite
 
     def __init__(self):
-        self.name = "Fictitious Play"
+        self.name = "Fictitious"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         # TODO: description
@@ -405,7 +405,7 @@ class ProportionalRegretMatching(Strategy):
     matrix_suite: MatrixSuite
 
     def __init__(self):
-        self.name = "Proportional Regret Matching"
+        self.name = "PRM"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         # TODO: description
@@ -475,7 +475,7 @@ class EFictitiousPlay(Strategy):
     payoff_history: List[Payoff]
 
     def __init__(self):
-        self.name = "EFictitiousPlay"
+        self.name = "EFictitious"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         # TODO: description

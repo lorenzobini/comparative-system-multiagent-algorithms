@@ -1,0 +1,13 @@
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ & \textit{Aselect} & \textit{EGreedy} & \textit{UCB} & \textit{Satisficing} & \textit{Softmax} & \textit{Fictitious} & \textit{Bully} & \textit{PRM} & \textit{EFictitious} & \textbf{MEAN} \\ \hline 
+\textit{Aselect} & 1.62 & 1.67 & 1.41 & 1.58 & 1.54 & 1.52 & 1.51 & 1.78 & 1.63 & 1.58 \\ \hline 
+\textit{EGreedy} & 1.94 & 2.17 & 2.28 & 2.48 & 2.31 & 2.24 & 2.81 & 2.48 & 2.34 & 2.34 \\ \hline 
+\textit{UCB} & 2.1 & 2.81 & 2.36 & 2.36 & 2.13 & 2.82 & 2.56 & 2.72 & 2.18 & 2.45 \\ \hline 
+\textit{Satisficing} & 1.4 & 1.9 & 2.34 & 1.77 & 1.5 & 1.85 & 1.85 & 1.93 & 1.57 & 1.79 \\ \hline 
+\textit{Softmax} & 1.68 & 2.12 & 2.04 & 2.17 & 1.75 & 1.82 & 2.27 & 2.42 & 2.04 & 2.03 \\ \hline 
+\textit{Fictitious} & 1.76 & 2.08 & 2.07 & 1.76 & 2.13 & 1.96 & 1.92 & 1.7 & 1.75 & 1.9 \\ \hline 
+\textit{Bully} & 2.16 & 2.25 & 2.42 & 2.06 & 2.24 & 2.03 & 2.16 & 2.19 & 2.11 & 2.18 \\ \hline 
+\textit{PRM} & 2.09 & 2.57 & 2.51 & 2.41 & 2.15 & 2.18 & 2.79 & 2.63 & 2.05 & 2.38 \\ \hline 
+\textit{EFictitious} & 1.75 & 1.42 & 2.09 & 1.68 & 1.74 & 2.03 & 1.93 & 2.04 & 1.86 & 1.84 \\ \hline 
+\end{tabular}
