@@ -1,6 +1,6 @@
 # NOTE: Execute the replicator dynamic on the grand table also visualize it as a graph.
 # You may change everything in this file.
-
+import os
 from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,14 +28,21 @@ class ReplicatorDynamic:
         self.grand_table = grand_table
         self.rounds = []
 
-    def to_graph(self):
+    def to_graph(self, name: str):
         """Visualize the evolution of proportions."""
-        # TODO: make a legend make it presentable
-        for strategy in self.history:
-            plt.plot(self.rounds, strategy, linewidth=2, color=np.random.rand(3,))
+        i = 0
+        path = os.path.dirname(__file__)
 
-        plt.legend()
+        for strategy in self.history:
+            plt.plot(self.rounds, strategy, linewidth=2, color=np.random.rand(3,),
+                     label=self.grand_table.row_strategies[i].name)
+            i += 1
+        plt.legend(loc='upper center', ncol=3, bbox_to_anchor=(0.5, 1.15), prop={'size': 6})
+        plt.savefig(path + "\\img\\" + name + ".png")
         plt.show()
+
+
+
 
     def check_stability(self, old_proportions, new_proportions) -> bool:
         """
@@ -67,7 +74,7 @@ class ReplicatorDynamic:
             self.history[i].append(proportions[i])
         self.rounds.append(round)
 
-    def run(self, proportions: List[float]) -> None:
+    def run(self, proportions: List[float], name="") -> None:
         """
         Runs the replicator dynamic until stability between the strategies is reached
         Parameters:
@@ -89,7 +96,7 @@ class ReplicatorDynamic:
             prop_vector = new_prop_vector
 
         self.update_history(new_prop_vector, round + 1)
-        self.to_graph()
+        self.to_graph(name)
 
 
 

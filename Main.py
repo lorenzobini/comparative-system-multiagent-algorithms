@@ -6,6 +6,7 @@ from MatrixSuite import FixedMatrixSuite
 from MatrixSuite import RandomIntMatrixSuite
 from MatrixSuite import RandomFloatMatrixSuite
 import Strategies
+from  Strategies import Strategy
 import Game
 from GrandTable import GrandTable
 from ReplicatorDynamic import ReplicatorDynamic, Proportions
@@ -14,7 +15,7 @@ from typing import List
 
 
 '''Setting up strategies and relative proportions'''
-'''
+
 strategies = [Strategies.Aselect(), Strategies.EGreedy(), Strategies.UCB(), Strategies.Satisficing(),
               Strategies.Softmax(), Strategies.FictitiousPlay(), Strategies.Bully(),
               Strategies.ProportionalRegretMatching()]
@@ -26,8 +27,7 @@ proportions = [Proportions.uniform_without_own_strat, Proportions.non_uniform_wi
 proportions_ext = [Proportions.uniform_with_own_strat, Proportions.non_uniform_with_own_strat]
 
 
-
-def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strategies],
+def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strategy],
                  proportions: List[List[float]], restarts: int, rounds=1000) -> None:
     """
     Builds the game session according to the given parameters.
@@ -47,15 +47,19 @@ def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strat
 
     grand_table.play_games()
     print(grand_table)
+    grand_table.to_latex("Game_" + str(game_id))
 
-    replicator_dynamic = ReplicatorDynamic(grand_table)
+    i = 1
     for proportion in proportions:
-        replicator_dynamic.run(proportion)
+        replicator_dynamic = ReplicatorDynamic(grand_table)
+        replicator_dynamic.run(proportion, name="Game_" + str(game_id) + "_" + str(i))
+        i+=1
 
     print("Gambit test result:")
     Nash.nash_equilibria(strategies, grand_table)
 
-
+game_session(1, FixedMatrixSuite(), strategies, proportions, 1)
+'''
 # FIRST GAME:Standard set of strategies, Fixed Matrix Suite
 game_session(1, FixedMatrixSuite(), strategies, proportions, 9)
 # SECOND GAME: Extended set of strategies, Fixed Matrix Suite
@@ -70,7 +74,7 @@ game_session(5, RandomFloatMatrixSuite(), strategies, proportions, 19)
 game_session(6, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
-'''
+
 
 ############# TEST AREA
 print("BEGIN  ########################################\n")
@@ -78,8 +82,8 @@ print("BEGIN  ########################################\n")
 
 matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.Softmax()  # Create the strategy you want to test.
-col_strat = Strategies.Softmax()
+row_strat = Strategies.EGreedy()  # Create the strategy you want to test.
+col_strat = Strategies.EGreedy()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
@@ -106,3 +110,4 @@ print("END  ########################################\n")
 ########################
 
 
+'''

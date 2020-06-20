@@ -3,6 +3,7 @@
 # it just has to calculate the grand table on a matrix suite,
 #  given a list of strategies, restarts and rounds per restart.
 import copy
+import os
 from statistics import mean
 
 from typing import List
@@ -89,6 +90,49 @@ class GrandTable:
         out = out + hline + "\n"
         return out
 
+    # Additional method: save grand table to file in LaTeX notation
+    def to_latex(self, filename: str):
+        path = path = os.path.dirname(__file__) + "\\grand_tables\\" + filename + ".txt"
+        f = open(path, "w+")
+
+        f.write("\\begin{tabular}{|" + "l|" * (len(self.col_strategies)+2) + "}\n")
+        f.write("\\hline\n")
+
+        header = ""
+        for strat in self.col_strategies:
+            header += " & " + strat.name
+        header += " & MEAN \\\\ \\hline \n"
+        f.write(header)
+
+        for i, row in enumerate(self.grand_table):
+            # Add the name of the strategy to the row.
+            out = self.row_strategies[i].name
+            for score in row:
+                out += " & " + str(round(score, 3))
+            out += " & " + str(round(mean(row), 3)) + " \\\\ \\hline \n"
+            f.write(out)
+
+        f.write("\\end{tabular}")
+
+
+
+
+        '''
+        \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+        \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+         &  &  &  &  &  &  &  &  &  \\ \hline
+        \end{tabular}
+        '''
+
+
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
 
     def play_games(self) -> None:
@@ -101,8 +145,11 @@ class GrandTable:
             for col_strategy in range(0, len(self.col_strategies)):
                 game = self.games[row_strategy][col_strategy]
 
-                for restart in range(1, self.restarts-1): #TODO: check if it runs 10 or 20 times
-                    if restart > 1:  # The first matrix is already initialised
+                print("Playing ", self.row_strategies[row_strategy], " against ", self.col_strategies[col_strategy])
+
+                for restart in range(0, self.restarts+1):
+                    game.initialize(game.matrix_suite)
+                    if restart > 0:  # The first matrix is already initialised
                         game.matrix_suite.generate_new_payoff_matrix()
                     payoff = game.play(self.rounds)
                     self.grand_table[row_strategy][col_strategy] += payoff

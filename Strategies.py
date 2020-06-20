@@ -163,6 +163,9 @@ class UCB(Strategy):
 
     def get_action(self, round_: int) -> Action:
         # TODO: description
+        if(round_ == 0):
+            return random.choice(self.actions)
+
         for action in self.actions:
             if action not in self.action_history:
                 return self.actions[action]
@@ -178,7 +181,8 @@ class UCB(Strategy):
             indices = len([i for i, j in enumerate(self.action_history) if j == each])
             avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
 
-        return self.actions[np.argmax(avgscores)[0]]
+        max_score = np.argmax(avgscores)
+        return self.actions[max_score]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
         self.action_history.append(action)
@@ -517,7 +521,8 @@ class EFictitiousPlay(Strategy):
             indices = len([i for i, j in enumerate(self.action_history) if j == each])
             avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
 
-        return self.actions[np.argmax(avgscores)[0]]
+        max_score = np.argmax(avgscores)
+        return self.actions[max_score]
 
     def play_FictitiousPlay(self, round_: int) -> Action:
         # TODO: description

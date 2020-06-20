@@ -1,0 +1,12 @@
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+ & Aselect & EGreedy & UCB & Satisficing Play & Softmax & Fictitious Play & Bully & Proportional Regret Matching & MEAN \\ \hline 
+Aselect & 8.001 & 3.494 & 2.51 & 7.171 & 2.955 & 2.508 & 9.478 & 2.504 & 4.828 \\ \hline 
+EGreedy & 8.98 & 5.017 & 3.745 & 6.923 & 4.296 & 3.687 & 10.66 & 3.723 & 5.879 \\ \hline 
+UCB & 9.603 & 5.163 & 5.925 & 6.764 & 4.49 & 3.992 & 10.98 & 3.992 & 6.364 \\ \hline 
+Satisficing Play & 7.178 & 2.984 & 2.071 & 6.619 & 2.564 & 2.009 & 9.006 & 2.041 & 4.309 \\ \hline 
+Softmax & 8.751 & 4.815 & 3.635 & 7.456 & 4.027 & 3.487 & 9.808 & 3.488 & 5.683 \\ \hline 
+Fictitious Play & 9.634 & 5.139 & 4.022 & 6.67 & 4.517 & 4.011 & 10.997 & 4.011 & 6.125 \\ \hline 
+Bully & 9.663 & 5.068 & 4.023 & 6.735 & 4.555 & 4.004 & 11.0 & 4.011 & 6.132 \\ \hline 
+Proportional Regret Matching & 9.435 & 5.08 & 4.032 & 6.655 & 4.552 & 4.001 & 10.997 & 4.008 & 6.095 \\ \hline 
+\end{tabular}
