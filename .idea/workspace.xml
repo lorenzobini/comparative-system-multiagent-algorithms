@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46944feb-5f43-461a-be1c-1b70bb80c12d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MatrixSuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSuite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +20,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -29,7 +27,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -53,18 +51,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -133,7 +119,105 @@
       <option name="project" value="LOCAL" />
       <updated>1592330006870</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Updated MatrixSuite.py with new custom methods">
+      <created>1592387867843</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1592387867843</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated Game.py and Strategies.py">
+      <created>1592401707670</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1592401707670</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Implemented Satisficing Play, added test section for strategies in Main.py">
+      <created>1592411397654</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1592411397654</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Implemented Bully">
+      <created>1592427804073</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1592427804073</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Implemented Fictitious Play">
+      <created>1592478186977</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592478186977</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Bug fixes">
+      <created>1592484101775</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1592484101775</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Implemented Proportional Regret Matching">
+      <created>1592497260468</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1592497260468</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Implemented Nash.py + minor fixes">
+      <created>1592574355508</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1592574355508</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Re-mplemented Game.py, implemented ReplicatorDynamic.py, bug fixes">
+      <created>1592590752149</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1592590752149</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Bug fixes">
+      <created>1592591901686</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1592591901686</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Bug fixes">
+      <created>1592592213344</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1592592213344</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Prepared Main.py, fixed issues">
+      <created>1592597312010</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1592597312010</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Implemented UCB and Softmax">
+      <created>1592598513893</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1592598513893</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Set next TODOs">
+      <created>1592598742981</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1592598742981</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -141,13 +225,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -159,17 +242,29 @@
     <MESSAGE value="Implemented GrandTable.py" />
     <MESSAGE value="workspace.xml" />
     <MESSAGE value="Implemented MatrixSuite.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented MatrixSuite.py" />
+    <MESSAGE value="Updated MatrixSuite.py with new custom methods" />
+    <MESSAGE value="Updated Game.py and Strategies.py" />
+    <MESSAGE value="Implemented Satisficing Play, added test section for strategies in Main.py" />
+    <MESSAGE value="Implemented Bully" />
+    <MESSAGE value="Implemented Fictitious Play" />
+    <MESSAGE value="Implemented Proportional Regret Matching" />
+    <MESSAGE value="Implemented Nash.py + minor fixes" />
+    <MESSAGE value="Re-mplemented Game.py, implemented ReplicatorDynamic.py, bug fixes" />
+    <MESSAGE value="Bug fixes" />
+    <MESSAGE value="Prepared Main.py, fixed issues" />
+    <MESSAGE value="Implemented UCB and Softmax" />
+    <MESSAGE value="Set next TODOs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set next TODOs" />
   </component>
   <component name="WindowStateProjectService">
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592232105490">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1504.963@0.0.1504.963" timestamp="1592232105490" />
-    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1592330004300">
+    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1592598740970">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1592330004300" />
+    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1592598740970" />
     <state x="533" y="224" key="FileChooserDialogImpl" timestamp="1592224679151">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
@@ -182,41 +277,57 @@
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="626" y="376" width="258" height="210" key="Github.ShareDialog/0.0.1504.963@0.0.1504.963" timestamp="1592224485364" />
-    <state width="741" height="198" key="GridCell.Tab.0.bottom" timestamp="1592330039946">
+    <state width="1483" height="347" key="GridCell.Tab.0.bottom" timestamp="1592597278061">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="741" height="198" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592330039946" />
-    <state width="741" height="198" key="GridCell.Tab.0.center" timestamp="1592330039946">
+    <state width="1483" height="347" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
+    <state width="1483" height="347" key="GridCell.Tab.0.center" timestamp="1592597278061">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="741" height="198" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1592330039946" />
-    <state width="741" height="198" key="GridCell.Tab.0.left" timestamp="1592330039946">
+    <state width="1483" height="347" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
+    <state width="1483" height="347" key="GridCell.Tab.0.left" timestamp="1592597278061">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="741" height="198" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1592330039946" />
-    <state width="741" height="198" key="GridCell.Tab.0.right" timestamp="1592330039946">
+    <state width="1483" height="347" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
+    <state width="1483" height="347" key="GridCell.Tab.0.right" timestamp="1592597278061">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="741" height="198" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1592330039946" />
-    <state x="254" y="125" key="SettingsEditor" timestamp="1592238716761">
+    <state width="1483" height="347" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
+    <state width="1483" height="317" key="GridCell.Tab.1.bottom" timestamp="1592591253474">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="254" y="125" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1592238716761" />
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1592330012260">
+    <state width="1483" height="317" key="GridCell.Tab.1.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592591253474" />
+    <state width="1483" height="317" key="GridCell.Tab.1.center" timestamp="1592591253473">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1592330012260" />
-    <state x="449" y="307" key="com.intellij.ide.util.TipDialog" timestamp="1592387102548">
+    <state width="1483" height="317" key="GridCell.Tab.1.center/0.0.1504.963@0.0.1504.963" timestamp="1592591253473" />
+    <state width="1483" height="317" key="GridCell.Tab.1.left" timestamp="1592591253469">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="449" y="307" key="com.intellij.ide.util.TipDialog/0.0.1504.963@0.0.1504.963" timestamp="1592387102548" />
-    <state x="562" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592387402116">
+    <state width="1483" height="317" key="GridCell.Tab.1.left/0.0.1504.963@0.0.1504.963" timestamp="1592591253469" />
+    <state width="1483" height="317" key="GridCell.Tab.1.right" timestamp="1592591253473">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="562" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1504.963@0.0.1504.963" timestamp="1592387402116" />
-    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1592231648612">
+    <state width="1483" height="317" key="GridCell.Tab.1.right/0.0.1504.963@0.0.1504.963" timestamp="1592591253473" />
+    <state x="254" y="125" key="SettingsEditor" timestamp="1592505108783">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup/0.0.1504.963@0.0.1504.963" timestamp="1592231648612" />
+    <state x="254" y="125" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1592505108783" />
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1592598516959">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1592598516959" />
+    <state x="449" y="307" key="com.intellij.ide.util.TipDialog" timestamp="1592504505548">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="449" y="307" key="com.intellij.ide.util.TipDialog/0.0.1504.963@0.0.1504.963" timestamp="1592504505548" />
+    <state x="562" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592568170176">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="562" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1504.963@0.0.1504.963" timestamp="1592568170176" />
+    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1592597142736">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup/0.0.1504.963@0.0.1504.963" timestamp="1592597142736" />
   </component>
 </project>

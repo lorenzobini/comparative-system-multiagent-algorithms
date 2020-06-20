@@ -1,6 +1,7 @@
 # Note: From this script the program can be run.
 # You may change everything about this file.
 
+import MatrixSuite
 from MatrixSuite import FixedMatrixSuite
 from MatrixSuite import RandomIntMatrixSuite
 from MatrixSuite import RandomFloatMatrixSuite
@@ -9,6 +10,7 @@ import Game
 from GrandTable import GrandTable
 from ReplicatorDynamic import ReplicatorDynamic, Proportions
 import Nash
+from typing import List
 
 
 
@@ -21,104 +23,37 @@ proportions = [Proportions.uniform_without_own_strat, Proportions.non_uniform_wi
 proportions_ext = [Proportions.uniform_with_own_strat, Proportions.non_uniform_with_own_strat]
 
 
-# TODO: CONSIDER REFACTORING
+
+def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strategies],
+                 proportions: List[float], restarts: int, rounds=1000) -> None:
+    print("\n==============================================\n")
+
+    print("GAME ", game_id, " \n")
+    grand_table = GrandTable(matrix_suite, strategies, restarts, rounds)
+
+    grand_table.play_games()
+    print(grand_table)
+
+    replicator_dynamic = ReplicatorDynamic(grand_table)
+    for proportion in proportions:
+        replicator_dynamic.run(proportion)
+
+    print("Gambit test result:")
+    Nash.nash_equilibria(strategies, grand_table)
 
 
-print("==============================================\n")
-
-print("FIRST GAME: Standard set of strategies, Fixed Matrix Suite \n")
-matrix_suite = FixedMatrixSuite()
-grand_table = GrandTable(matrix_suite, strategies, 9, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies, grand_table)
-
-print("==============================================\n")
-
-print("SECOND GAME: Extended set of strategies, Fixed Matrix Suite \n")
-grand_table = GrandTable(matrix_suite, strategies_ext, 9, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions_ext:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies_ext, grand_table)
-
-print("==============================================\n")
-
-print("THIRD GAME: Standard set of strategies, Random Int Matrix Suite \n")
-matrix_suite = RandomIntMatrixSuite()
-grand_table = GrandTable(matrix_suite, strategies, 19, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies, grand_table)
-
-print("==============================================\n")
-
-print("FOURTH GAME: Extended set of strategies, Fixed Random Int Suite \n")
-grand_table = GrandTable(matrix_suite, strategies_ext, 19, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions_ext:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies_ext, grand_table)
-
-print("==============================================\n")
-
-print("THIRD GAME: Standard set of strategies, Random Float Matrix Suite \n")
-matrix_suite = RandomFloatMatrixSuite()
-grand_table = GrandTable(matrix_suite, strategies, 19, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies, grand_table)
-
-print("==============================================\n")
-
-print("FOURTH GAME: Extended set of strategies, Fixed Random Float Suite \n")
-grand_table = GrandTable(matrix_suite, strategies_ext, 19, 1000)
-
-grand_table.play_games()
-print(grand_table)
-
-replicator_dynamic = ReplicatorDynamic(grand_table)
-for proportion in proportions_ext:
-    replicator_dynamic.run(proportion)
-
-print("Gambit test result:")
-Nash.nash_equilibria(strategies_ext, grand_table)
-
-print("==============================================\n")
-
+# FIRST GAME:Standard set of strategies, Fixed Matrix Suite
+game_session(1, FixedMatrixSuite(), strategies, proportions, 9)
+# SECOND GAME: Extended set of strategies, Fixed Matrix Suite
+game_session(2, FixedMatrixSuite(), strategies_ext, proportions_ext, 9)
+# THIRD GAME: Standard set of strategies, Random Int Matrix Suite
+game_session(3, RandomIntMatrixSuite(), strategies, proportions, 19)
+# FOURTH GAME: Extended set of strategies, Random Int Matrix Suite
+game_session(4, RandomIntMatrixSuite(), strategies_ext, proportions_ext, 19)
+# FIFTH GAME: Standard set of strategies, Random Float Matrix Suite
+game_session(3, RandomFloatMatrixSuite(), strategies, proportions, 19)
+# SIXTH GAME: Extended set of strategies, Random Float Matrix Suite
+game_session(3, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
 '''
@@ -154,45 +89,5 @@ print()
 print("END  ########################################\n")
 ########################
 
-
-
-# Example of how to test a strategy:
-matrix_suite = FixedMatrixSuite()  # Create a matrix suite
-
-strat = Strategies.Aselect()  # Create the strategy you want to test.
-
-strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
-
-action = strat.get_action(1)  # Get the next action
-print("Strategy plays action:" + action.__repr__())
-
-strat.update(1, action, 1.5, 1)  # Update the strategy with a fake payoff and opponent action.
-# Now you might want to look at the class attributes of the strategy,
-# which you can call the same as functions, just without any parentheses.
-print("Aselect actions:")
-print(strat.actions)
-print()
-
-
-# Test to see if gambit runs properly, see Section 5 of the assignment and Nash.py
-m = [[3, 0, 5],
-     [1, 0, 1],
-     [3, 1, 3]]
-print("Gambit test result:")
-Nash.run_gambit(strategies, m)
-# The output should be this:
-# ======================|
-#  Aselect: 1.00 | 1.00 |
-#  Aselect: ---- | ---- |
-#  Aselect: ---- | ---- |
-# ======================|
-#  Aselect: 1.00 | ---- |
-#  Aselect: ---- | ---- |
-#  Aselect: ---- | 1.00 |
-# ======================|
-#  Aselect: ---- | 1.00 |
-#  Aselect: ---- | ---- |
-#  Aselect: 1.00 | ---- |
-# ======================|
 
 '''
