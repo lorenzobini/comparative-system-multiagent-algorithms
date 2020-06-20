@@ -9,7 +9,6 @@ import random
 import numpy as np
 from numpy.random import choice
 from typing import List
-from operator import sub
 
 from MatrixSuite import Action, Payoff
 from MatrixSuite import MatrixSuite
@@ -100,8 +99,8 @@ class EGreedy(Strategy):
     payoffs: List[Payoff]
     prob: float
     epsilon: float
-    probarray: np.ndarray
-
+    action_history: List[Action]
+    payoff_history: List[Payoff]
 
     def __init__(self):
         self.name = "EGreedy"
@@ -111,55 +110,41 @@ class EGreedy(Strategy):
         self.actions = matrix_suite.get_actions(player)
         self.epsilon = 0.1
         self.prob = 1 - self.epsilon
-        self.actions = []
-        self.payoffs = []
-        self.probarray = np.zeros(len(self.actions))
+        self.action_history = []
+        self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        print(round_)
-        if (round_ == 1):
+        # TODO: description
+        if round_ == 0:
             return random.choice(self.actions)
 
-        if (round_ == 2):
-            highestpayoff = self.payofflist[0]
+        avg_scores = np.zeros(len(self.actions))
 
-        np_player_payoffs = np.asarray(self.payofflist, dtype=np.float32)
-        np_actions = np.asarray(self.actionlist, dtype=np.int)
+        # calculate average for each
+        for each in set(self.action_history):
+            indices = [i for i, j in enumerate(self.action_history) if j == each]
+            avg = sum([self.payoff_history[i] for i in indices]) / len(indices)
+            avg_scores[each] = avg
 
-        print(len(self.actionlist), "actionlist elements")
-        print(len(self.payofflist), "payofflist elements")
-        print(highestpayoff, "highestpayoff")
+        # retrieve highest average
+        best_strategy = np.argmax(avg_scores)
 
-        temp1 = []
+        # chose explore or exploit based on probabilities
+        strategy = np.random.choice(['Explore', 'Exploit'], p=[self.epsilon, self.prob])
 
-        for each in np.unique(np_actions):
-            indices = np.argwhere(np_actions == each)
-            for each_ in indices:
-                temp = np_player_payoffs[each_]
-                temp1.append(temp)
-                temp2 = sum(temp1)/len(indices)
-                if temp2 >= highestpayoff:
-                    highestpayoff = temp2
-                    beststrategy = each
-
-
-        print(beststrategy, "beststrategy")
-        range_ = len(set(self.actionlist)) + 1
-        self.probarray[beststrategy] = self.prob
-        choiceindex = choice([i for i in range(0, range_) if i not in [beststrategy, -1]])
-
-        print(choiceindex, "epsilonindex")
-        self.probarray[choiceindex] = self.epsilon
-
-        ind = np.where(np.random.multinomial(1, self.probarray))[0][0]
-
-
-        return self.actions[ind]
+        if strategy == "Explore":
+            range_ = len(set(self.actions))
+            choiceindex = choice([i for i in range(0, range_) if i not in [best_strategy, -1]])
+            return self.actions[choiceindex]
+        else:
+            return self.actions[best_strategy]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        print (action, "update action")
-        self.actionlist.append(action)
-        self.payofflist.append(payoff)
+        # TODO: description
+        self.action_history.append(action)
+        self.payoff_history.append(payoff)
+
+
 
 class UCB(Strategy):
     """Implements the Aselect (random play) algorithm."""
@@ -193,7 +178,7 @@ class UCB(Strategy):
             indices = len([i for i, j in enumerate(self.action_history) if j == each])
             avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
 
-        return self.actions[np.argmax(avgscores)]
+        return self.actions[np.argmax(avgscores)[0]]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
         self.action_history.append(action)
@@ -270,7 +255,7 @@ class Satisficing(Strategy):
 
     def get_action(self, round_: int) -> Action:
         """Exploit if the last action satisfies the aspiration level, otherwise explore."""
-        action: Action
+        action = random.choice(self.actions)
 
         if len(self.past_payoffs) == 0 or self.past_payoffs[-1] < self.alpha:
             action = random.randint(0, len(self.actions)-1)
@@ -315,6 +300,7 @@ class Bully(Strategy):
         player_actions = matrix_suite.get_actions("row" if self.player==0 else "col")
         opponent_actions = matrix_suite.get_actions("row" if self.opponent==0 else "col")
         max_payoff = 0
+        best_action = random.choice(self.actions)
 
         for player_action in player_actions:
             total = 0
@@ -436,7 +422,6 @@ class ProportionalRegretMatching(Strategy):
 
         return action
 
-
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
         """Updating payoffs and regret"""
         total_regret = 0
@@ -474,14 +459,14 @@ class EFictitiousPlay(Strategy):
     payoffs: List[Payoff]
     prob: float
     epsilon: float
-    #FictitiousPlay
+    # FictitiousPlay
     player: int
     opponent: int
     opponent_actions: List[Action]
     opp_action_frequency: List[int]
     most_frequent_actions: List[int]
     matrix_suite: MatrixSuite
-    #UCB
+    # UCB
     action_history: List[Action]
     payoff_history: List[Payoff]
 
@@ -501,7 +486,7 @@ class EFictitiousPlay(Strategy):
         self.opponent_actions = matrix_suite.get_actions("row" if player == "col" else "col")
         self.opp_action_frequency = [0 for action in self.opponent_actions]
         self.most_frequent_actions = []
-        #UCB
+        # UCB
         self.action_history = []
         self.payoff_history = []
 
@@ -532,7 +517,7 @@ class EFictitiousPlay(Strategy):
             indices = len([i for i, j in enumerate(self.action_history) if j == each])
             avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
 
-        return self.actions[np.argmax(avgscores)]
+        return self.actions[np.argmax(avgscores)[0]]
 
     def play_FictitiousPlay(self, round_: int) -> Action:
         # TODO: description
