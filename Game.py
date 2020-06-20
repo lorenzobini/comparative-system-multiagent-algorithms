@@ -5,7 +5,7 @@
 from typing import List
 
 import MatrixSuite
-from Strategies import  Strategy
+from Strategies import Strategy
 from MatrixSuite import Payoff, Action
 
 
@@ -35,10 +35,7 @@ class Game:
     round_: int
     row_player: Strategy
     col_player: Strategy
-    row_player_actions: List[Action]
-    col_player_actions: List[Action]
     row_player_payoffs: List[Payoff]
-    col_player_payoffs: List[Payoff]
 
     def __init__(self, game_suite: MatrixSuite, row_player: Strategy, col_player: Strategy) -> None:
         """Set all the variables and call the initialize method."""
@@ -50,37 +47,37 @@ class Game:
         """(Re-) initialize the game with an updated matrix suite."""
         self.matrix_suite = game_suite
         self.round_ = 0
-        self.row_player_actions = []
-        self.col_player_actions = []
         self.row_player_payoffs = []
-        self.col_player_payoffs = []
 
         # Call initialize on the strategies at the start of the game.
         self.row_player.initialize(self.matrix_suite, "row")
         self.col_player.initialize(self.matrix_suite, "col")
 
-    def play_round(self, round):
-        # TODO: description
-        row_action = self.row_player.get_action(0)  # Get the next action
-        col_action = self.col_player.get_action(0)
-
-        self.row_player_actions.append(row_action)
-        self.col_player_actions.append(col_action)
+    def play_round(self, round) -> None:
+        """
+        Plays the round by generating both players' action and determining the relative reward
+        """
+        row_action = self.row_player.get_action(round)  # Get the next action
+        col_action = self.col_player.get_action(round)
 
         row_payoff, col_payoff = self.matrix_suite.get_payoffs(row_action, col_action)
 
         self.row_player_payoffs.append(row_payoff)
-        self.col_player_payoffs.append(col_payoff)
 
         self.row_player.update(round, row_action, row_payoff, col_action)
+        self.col_player.update(round, col_action, col_payoff, row_action)
 
-    def play(self) -> float:
-        # TODO: description
-        for round in range(0, 999):
+    def play(self, rounds: int) -> float:
+        """
+        Plays the game for the specified number of rounds
+        Returns:
+            The average payoff for the row player
+        """
+        for round in range(0, rounds-1):
             self.play_round(round)
 
-        avgrow = sum(self.row_player_payoffs) / len(self.row_player_payoffs)
+        avg = sum(self.row_player_payoffs) / len(self.row_player_payoffs)
 
-        return avgrow
+        return avg
 
     # Add methods that implement the logic of playing a game, so play one round and play x rounds.

@@ -92,17 +92,20 @@ class GrandTable:
     # Methods to play all games for the specified number of rounds and handle the restarts, can go here.
 
     def play_games(self) -> None:
-        # TODO: description
+        """
+        Plays the game for a *restarts* number of time. At each restart, it updates the *grand_table*
+        At the end of each restart it averages the payoff of each strategy against each other strategy
+        with the relative payoffs of the previous restarts
+        """
         for row_strategy in range(0, len(self.row_strategies)):
             for col_strategy in range(0, len(self.col_strategies)):
                 game = self.games[row_strategy][col_strategy]
 
-                for session in range(1, self.restarts-1):
-                    if session > 1:  # The first matrix is already initialised
+                for restart in range(1, self.restarts-1): #TODO: check if it runs 10 or 20 times
+                    if restart > 1:  # The first matrix is already initialised
                         game.matrix_suite.generate_new_payoff_matrix()
-                    payoff = game.play()
+                    payoff = game.play(self.rounds)
                     self.grand_table[row_strategy][col_strategy] += payoff
-
 
                 self.grand_table[row_strategy][col_strategy] /= self.restarts
 

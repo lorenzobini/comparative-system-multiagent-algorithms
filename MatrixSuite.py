@@ -138,7 +138,6 @@ class FixedMatrixSuite(MatrixSuite):
                         [(5, 5), (8, 2), (0, 10), (8, 2)], [(1, 9), (4, 6), (7, 3), (6, 4)]])
         }
 
-
         self.generate_new_payoff_matrix()
 
     def __repr__(self) -> str:
@@ -162,12 +161,16 @@ class FixedMatrixSuite(MatrixSuite):
 # Add the other game suites below
 
 class RandomIntMatrixSuite(MatrixSuite):
-    # TODO: description ?
+    """
+    Generates a matrix of N rows per M columns with random integers payoffs.
+    Class attributes:
+        *matrix_suite: The MatrixSuite that the game is played on
+    """
+
     def __init__(self) -> None:
         self.name = "Random Int Matrix Suite"
 
         self.generate_new_payoff_matrix()
-
 
     def __repr__(self) -> str:
         """Add some extra information to the print of this class."""
@@ -194,14 +197,17 @@ class RandomIntMatrixSuite(MatrixSuite):
         self.payoff_matrix = matrix
 
 
-
 class RandomFloatMatrixSuite(MatrixSuite):
-    # TODO: description ?
+    """
+    Generates a matrix of N rows per M columns with random float payoffs.
+    Parameters:
+        *matrix_suite: The MatrixSuite that the game is played on
+    """
+
     def __init__(self) -> None:
         self.name = "Random Float Matrix Suite"
 
         self.generate_new_payoff_matrix()
-
 
     def __repr__(self) -> str:
         """Add some extra information to the print of this class."""
@@ -219,7 +225,7 @@ class RandomFloatMatrixSuite(MatrixSuite):
         for row in range(0, n_row):
             matrix_row = []
             for col in range(0, n_col):
-                payoffs = (round(random.uniform(0.0, 3.0),3), round(random.uniform(0.0, 3.0),3))
+                payoffs = (round(random.uniform(0.0, 3.0), 3), round(random.uniform(0.0, 3.0), 3))
                 matrix_row.append(payoffs)
             matrix.append(matrix_row)
 

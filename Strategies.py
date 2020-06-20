@@ -104,9 +104,7 @@ class EGreedy(Strategy):
 
 
     def __init__(self):
-
         self.name = "EGreedy"
-
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         """Just save the actions as that's the only thing we need."""
@@ -158,10 +156,13 @@ class EGreedy(Strategy):
 
         return self.actions[ind]
 
-
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        print (action, "update action")
+        self.actionlist.append(action)
+        self.payofflist.append(payoff)
 
 class UCB(Strategy):
-    """Implements the UCB algorithm."""
+    """Implements the Aselect (random play) algorithm."""
     actions: List[Action]
     action_history: List[Action]
     payoff_history: List[Payoff]
@@ -170,6 +171,7 @@ class UCB(Strategy):
         self.name = "UCB"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """Just save the actions as that's the only thing we need."""
         self.actions = matrix_suite.get_actions(player)
         self.action_history = []
         self.payoff_history = []
@@ -181,20 +183,19 @@ class UCB(Strategy):
                 return self.actions[action]
 
         avgscores = np.zeros(len(self.actions))
+
         for each in set(self.action_history):
             indices = [i for i, j in enumerate(self.action_history) if j == each]
             avg = sum([self.payoff_history[i] for i in indices]) / len(indices)
-            print (avg, "avg")
             avgscores[each] = avg
 
-        for each in set(self.action_history):
+        for each in set(self.actions):
             indices = len([i for i, j in enumerate(self.action_history) if j == each])
-            avgscores[each] = avgscores[each] + math.sqrt((2*math.log(round_)) / indices)
+            avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
 
-        return self.actions[avgscores.index(max(avgscores))]
+        return self.actions[np.argmax(avgscores)]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        # TODO: description
         self.action_history.append(action)
         self.payoff_history.append(payoff)
 
@@ -203,9 +204,12 @@ class Softmax(Strategy):
     """Implements the Softmax algorithm."""
     actions: List[Action]
     qmatrix: np.ndarray
-    learning_rate:float
+    learning_rate: float
     discount: float
     payoff: float
+    temperature: float
+    action_history: List[Action]
+    probmatrix: np.ndarray
 
     def __init__(self):
         self.name = "Softmax"
@@ -213,26 +217,37 @@ class Softmax(Strategy):
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
         # TODO: description
         self.actions = matrix_suite.get_actions(player)
-        self.qmatrix = np.zeros(len(self.actions))
+        self.qmatrix = np.ones(len(self.actions))
+        self.probmatrix = np.zeros(len(self.actions))
         self.learning_rate = 0.1
-        self.discount = 0.0
+        self.temperature = 1.0
         self.payoff = 0.0
+        self.action_history = []
 
     def get_action(self, round_: int) -> Action:
         # TODO: description
-        if round_ == 1:
+        # first round pick a random action
+        if round_ == 0:
             return random.choice(self.actions)
-        maxq = np.max(self.qmatrix)
-        for each in self.actions:
-            curq = self.qmatrix[each]
-            self.qmatrix[each] = (1-self.learningrate) * curq + self.learningrate * (self.payoff + self.discount * maxq)
-        #normalize
-        for i in range (0, len(self.qmatrix)):
-            self.qmatrix[i] = self.qmatrix[i] / sum(self.qmatrix)
+        # check last action and its respective q-value
+        lastaction = self.action_history[-1]
+        curq = self.qmatrix[lastaction]
+        # update q value
+        self.qmatrix[lastaction] = (1 - self.learning_rate) * curq + self.learning_rate * (self.payoff)
 
+        # normalize using softmax
+        i = 0
+        for each in self.qmatrix:
+            self.probmatrix[i] = np.exp(each / self.temperature) / sum(np.exp(self.qmatrix / self.temperature))
+            i += 1
+        # get action based on probabilities
+        ind = np.where(np.random.multinomial(1, self.probmatrix))[0][0]
+
+        return self.actions[ind]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
         self.payoff = payoff
+        self.action_history.append(action)
 
 
 class Satisficing(Strategy):
@@ -455,7 +470,7 @@ class ProportionalRegretMatching(Strategy):
 
 class EFictitiousPlay(Strategy):
     """Egreedy with UCB played 10% of times and FictitiousPlay played 90% of times"""
-    actions: List[Action]  # possibly a window
+    actions: List[Action]  # TODO: possibly a window
     payoffs: List[Payoff]
     prob: float
     epsilon: float
@@ -474,6 +489,7 @@ class EFictitiousPlay(Strategy):
         self.name = "EFictitiousPlay"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        # TODO: description
         self.actions = matrix_suite.get_actions(player)
         self.payoffs = []
         self.epsilon = 0.2
@@ -485,19 +501,41 @@ class EFictitiousPlay(Strategy):
         self.opponent_actions = matrix_suite.get_actions("row" if player == "col" else "col")
         self.opp_action_frequency = [0 for action in self.opponent_actions]
         self.most_frequent_actions = []
-
-
+        #UCB
+        self.action_history = []
+        self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        """Pick the next action randomly from the possible actions."""
-        #Pick one of the two
-        return random.choice(self.actions)
+        # TODO: description
+        strategy = np.random.choice(["exploit", "explore"], p=[self.prob, self.epsilon])
+        if strategy == "exploit":
+            action = self.play_FictitiousPlay(round_)
+        else:
+            action = self.play_UCB(round_)
 
-    def play_UCB(self):
-        raise NotImplementedError
+        return action
 
-    def play_FictitiousPlay(self) -> Action:
+    def play_UCB(self, round_: int):
+        # TODO: description
+        for action in self.actions:
+            if action not in self.action_history:
+                return self.actions[action]
 
+        avgscores = np.zeros(len(self.actions))
+
+        for each in set(self.action_history):
+            indices = [i for i, j in enumerate(self.action_history) if j == each]
+            avg = sum([self.payoff_history[i] for i in indices]) / len(indices)
+            avgscores[each] = avg
+
+        for each in set(self.actions):
+            indices = len([i for i, j in enumerate(self.action_history) if j == each])
+            avgscores[each] = avgscores[each] + math.sqrt((2 * math.log(round_)) / indices)
+
+        return self.actions[np.argmax(avgscores)]
+
+    def play_FictitiousPlay(self, round_: int) -> Action:
+        # TODO: description
         if len(self.most_frequent_actions) == 0:
             action = random.choice(self.actions)
         elif len(self.most_frequent_actions) == 1:
@@ -506,6 +544,26 @@ class EFictitiousPlay(Strategy):
             action = self.find_best_response(random.choice(self.most_frequent_actions))
 
         return action
+
+    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """Updating frequency table for FictitiousPlay"""
+        self.opp_action_frequency[opp_action] += 1
+        self.most_frequent_actions = self.find_most_frequent_actions()
+        """Updating actions and payoffs for UCB"""
+        self.action_history.append(action)
+        self.payoff_history.append(payoff)
+
+    def find_most_frequent_actions(self) -> List[Action]:
+        """Determines the action(s) that  is(are) most frequently chosen by the opponent"""
+        max_payoff = 0
+        most_frequent_actions = []
+        for action in range(0, len(self.opponent_actions)-1):
+            if self.opp_action_frequency[action] > max_payoff:
+                most_frequent_actions = [action]
+            elif self.opp_action_frequency[action] == max_payoff:
+                most_frequent_actions.append(action)
+
+        return most_frequent_actions
 
     def find_best_response(self, opp_action: Action) -> Action:
         # TODO: description
@@ -525,7 +583,3 @@ class EFictitiousPlay(Strategy):
                 best_response = action
 
         return best_response
-
-    def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        """Aselect has no update mechanic."""
-        pass

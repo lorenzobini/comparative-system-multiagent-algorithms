@@ -38,8 +38,16 @@ class ReplicatorDynamic:
         plt.show()
 
     def check_stability(self, old_proportions, new_proportions) -> bool:
-        # TODO: description
-        delta = 0.001
+        """
+        Check the stability of the proportions given a threshold for maximum difference
+        Parameters:
+            *old_proportions*: Set of proportions from the previous round
+            *new_proportions*: Set of newly computed proportions from the current round
+        Returns:
+             True if the absolute difference between the sets is lower than the threshold
+             False otherwise
+        """
+        delta = 0.0001
         diff = new_proportions - old_proportions
         diff = abs(diff)
 
@@ -49,12 +57,22 @@ class ReplicatorDynamic:
             return False
 
     def update_history(self, proportions: List[float], round: int) -> None:
+        """
+        Updates the history of proportions
+        Parameters:
+            *proportions*: Proportions associated to each strategy
+            *round*: The current round
+        """
         for i in range(0, len(proportions)):
             self.history[i].append(proportions[i])
         self.rounds.append(round)
 
     def run(self, proportions: List[float]) -> None:
-        # TODO: description
+        """
+        Runs the replicator dynamic until stability between the strategies is reached
+        Parameters:
+            *proportions*: Proportions associated to each strategy
+        """
         score_table = np.array(self.grand_table.grand_table)
         prop_vector = np.array(proportions)
         round = 0
