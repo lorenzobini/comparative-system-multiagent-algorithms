@@ -15,6 +15,7 @@ from typing import List
 
 
 ''' Setting up strategies and relative proportions '''
+'''
 strategies = [Strategies.Aselect(), Strategies.EGreedy(), Strategies.UCB(), Strategies.Satisficing(),
               Strategies.Softmax(), Strategies.FictitiousPlay(), Strategies.Bully,
               Strategies.ProportionalRegretMatching()]
@@ -25,7 +26,8 @@ proportions_ext = [Proportions.uniform_with_own_strat, Proportions.non_uniform_w
 
 
 def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strategies],
-                 proportions: List[float], restarts: int, rounds=1000) -> None:
+                 proportions: List[List[float]], restarts: int, rounds=1000) -> None:
+    # TODO: add description
     print("\n==============================================\n")
 
     print("GAME ", game_id, " \n")
@@ -51,9 +53,9 @@ game_session(3, RandomIntMatrixSuite(), strategies, proportions, 19)
 # FOURTH GAME: Extended set of strategies, Random Int Matrix Suite
 game_session(4, RandomIntMatrixSuite(), strategies_ext, proportions_ext, 19)
 # FIFTH GAME: Standard set of strategies, Random Float Matrix Suite
-game_session(3, RandomFloatMatrixSuite(), strategies, proportions, 19)
+game_session(5, RandomFloatMatrixSuite(), strategies, proportions, 19)
 # SIXTH GAME: Extended set of strategies, Random Float Matrix Suite
-game_session(3, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
+game_session(6, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
 '''
@@ -64,8 +66,8 @@ print("BEGIN  ########################################\n")
 
 matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.ProportionalRegretMatching()  # Create the strategy you want to test.
-col_strat = Strategies.ProportionalRegretMatching()
+row_strat = Strategies.UCB()  # Create the strategy you want to test.
+col_strat = Strategies.UCB()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
@@ -80,7 +82,7 @@ for round in range(0, 10):
     col_strat.update(round, col_action, col_payoff, row_action)# Update the strategy with a fake payoff and opponent action.
 # Now you might want to look at the class attributes of the strategy,
 # which you can call the same as functions, just without any parentheses.
-print("Bully actions:")
+print("UCB actions:")
 print(row_strat.actions, " ROW")
 print(col_strat.actions, " COL")
 print()
@@ -90,4 +92,3 @@ print("END  ########################################\n")
 ########################
 
 
-'''
