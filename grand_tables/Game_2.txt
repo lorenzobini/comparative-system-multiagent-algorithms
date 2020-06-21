@@ -1,13 +1,13 @@
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
  & \textit{Aselect} & \textit{EGreedy} & \textit{UCB} & \textit{Satisficing} & \textit{Softmax} & \textit{Fictitious} & \textit{Bully} & \textit{PRM} & \textit{EFictitious} & \textbf{MEAN} \\ \hline 
-\textit{Aselect} & 4.61 & 3.76 & 3.59 & 5.09 & 3.73 & 3.59 & 3.61 & 3.64 & 3.53 & 3.91 \\ \hline 
-\textit{EGreedy} & 5.83 & 5.08 & 5.11 & 6.25 & 5.21 & 5.59 & 5.68 & 4.94 & 5.3 & 5.44 \\ \hline 
-\textit{UCB} & 6.13 & 5.08 & 5.8 & 6.73 & 5.27 & 5.98 & 6.09 & 5.07 & 5.56 & 5.75 \\ \hline 
-\textit{Satisficing} & 4.33 & 3.68 & 3.67 & 4.73 & 3.71 & 3.71 & 3.79 & 3.45 & 3.58 & 3.85 \\ \hline 
-\textit{Softmax} & 5.7 & 5.47 & 5.71 & 6.34 & 5.18 & 5.63 & 5.86 & 5.07 & 5.34 & 5.59 \\ \hline 
-\textit{Fictitious} & 5.51 & 4.0 & 4.67 & 5.77 & 3.83 & 5.55 & 5.72 & 3.95 & 4.83 & 4.87 \\ \hline 
-\textit{Bully} & 6.11 & 5.09 & 4.9 & 6.55 & 5.11 & 5.33 & 5.0 & 4.89 & 5.26 & 5.36 \\ \hline 
-\textit{PRM} & 6.11 & 5.63 & 5.42 & 6.73 & 5.45 & 5.99 & 6.11 & 5.28 & 5.39 & 5.79 \\ \hline 
-\textit{EFictitious} & 5.62 & 4.75 & 4.64 & 5.91 & 4.82 & 5.6 & 5.79 & 4.53 & 5.27 & 5.22 \\ \hline 
+\textit{Aselect} & 4.55 & 3.81 & 3.61 & 5.05 & 3.86 & 3.48 & 3.6 & 3.58 & 3.58 & 3.9 \\ \hline 
+\textit{EGreedy} & 5.88 & 5.2 & 5.05 & 6.26 & 5.01 & 5.61 & 5.73 & 4.97 & 5.24 & 5.44 \\ \hline 
+\textit{UCB} & 6.12 & 5.47 & 5.43 & 6.51 & 5.14 & 5.98 & 6.09 & 5.04 & 5.63 & 5.71 \\ \hline 
+\textit{Satisficing} & 4.31 & 3.52 & 3.32 & 4.69 & 3.37 & 3.69 & 3.79 & 3.45 & 3.64 & 3.75 \\ \hline 
+\textit{Softmax} & 5.82 & 5.32 & 5.12 & 6.35 & 5.29 & 5.62 & 5.68 & 4.98 & 5.39 & 5.51 \\ \hline 
+\textit{Fictitious} & 5.52 & 4.51 & 3.68 & 5.86 & 3.86 & 5.05 & 5.73 & 3.67 & 4.93 & 4.76 \\ \hline 
+\textit{Bully} & 6.14 & 5.12 & 4.9 & 6.52 & 5.11 & 5.33 & 5.0 & 4.89 & 5.25 & 5.36 \\ \hline 
+\textit{PRM} & 6.13 & 5.45 & 5.28 & 6.73 & 5.48 & 5.82 & 6.1 & 5.29 & 5.64 & 5.77 \\ \hline 
+\textit{EFictitious} & 5.59 & 4.42 & 4.73 & 5.93 & 4.87 & 5.74 & 5.78 & 4.59 & 5.47 & 5.24 \\ \hline 
 \end{tabular}
