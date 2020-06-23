@@ -106,7 +106,7 @@ class EGreedy(Strategy):
         self.name = "EGreedy"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        """Just save the actions as that's the only thing we need."""
+        # TODO: description
         self.actions = matrix_suite.get_actions(player)
         self.epsilon = 0.1
         self.prob = 1 - self.epsilon
@@ -147,7 +147,7 @@ class EGreedy(Strategy):
 
 
 class UCB(Strategy):
-    """Implements the Aselect (random play) algorithm."""
+    #TODO: description
     actions: List[Action]
     action_history: List[Action]
     payoff_history: List[Payoff]
@@ -156,7 +156,7 @@ class UCB(Strategy):
         self.name = "UCB"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        """Just save the actions as that's the only thing we need."""
+        # TODO: description
         self.actions = matrix_suite.get_actions(player)
         self.action_history = []
         self.payoff_history = []
@@ -346,7 +346,7 @@ class FictitiousPlay(Strategy):
         self.most_frequent_actions = []
 
     def get_action(self, round_: int) -> Action:
-        """Returns the best response at the opponent's most chosen action"""
+        """Returns the best response to the opponent's most chosen action"""
 
         if len(self.most_frequent_actions) == 0:
             action = random.choice(self.actions)

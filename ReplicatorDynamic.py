@@ -22,11 +22,13 @@ class ReplicatorDynamic:
     history: List[List[float]]
     rounds: List[int]
     grand_table: GrandTable
+    stability_count: int
 
     def __init__(self, grand_table: GrandTable):
         self.history = [[] for i in grand_table.row_strategies]
         self.grand_table = grand_table
         self.rounds = []
+        self.stability_count = 0
 
     def to_graph(self, name: str): # TODO: fix overlapping
         """Visualize the evolution of proportions."""
@@ -54,13 +56,18 @@ class ReplicatorDynamic:
              True if the absolute difference between the sets is lower than the threshold
              False otherwise
         """
-        delta = 0.0001
+        delta = 0.00001
         diff = new_proportions - old_proportions
         diff = abs(diff)
 
         if sum(diff) <= delta:
-            return True
+            self.stability_count += 1
+            if self.stability_count == 50:
+                return True
+            else:
+                return False
         else:
+            self.stability_count = 0
             return False
 
     def update_history(self, proportions: List[float], round: int) -> None:

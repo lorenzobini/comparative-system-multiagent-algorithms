@@ -73,16 +73,16 @@ game_session(5, RandomFloatMatrixSuite(), strategies, proportions, 19)
 game_session(6, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
-'''
 
+'''
 ############# TEST AREA
 print("BEGIN  ########################################\n")
 
 
 matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.EGreedy()  # Create the strategy you want to test.
-col_strat = Strategies.EGreedy()
+row_strat = Strategies.UCB()  # Create the strategy you want to test.
+col_strat = Strategies.UCB()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
@@ -107,6 +107,5 @@ print()
 
 print("END  ########################################\n")
 ########################
-
 
 '''
