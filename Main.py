@@ -15,7 +15,7 @@ from typing import List
 
 
 '''Setting up strategies and relative proportions'''
-
+'''
 strategies = [Strategies.Aselect(), Strategies.EGreedy(), Strategies.UCB(), Strategies.Satisficing(),
               Strategies.Softmax(), Strategies.FictitiousPlay(), Strategies.Bully(),
               Strategies.ProportionalRegretMatching()]
@@ -81,8 +81,8 @@ print("BEGIN  ########################################\n")
 
 matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
 
-row_strat = Strategies.UCB()  # Create the strategy you want to test.
-col_strat = Strategies.UCB()
+row_strat = Strategies.Softmax()  # Create the strategy you want to test.
+col_strat = Strategies.Softmax()
 row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
 col_strat.initialize(matrix_suite, "col")
 
@@ -108,4 +108,3 @@ print()
 print("END  ########################################\n")
 ########################
 
-'''

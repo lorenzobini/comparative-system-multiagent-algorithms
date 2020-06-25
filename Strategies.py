@@ -94,9 +94,16 @@ class Aselect(Strategy):
 # Add the other strategies below
 
 class EGreedy(Strategy):
-    """Implements the Egreedy (exploration-exploitation) algorithm."""
+    """
+    Implements the Egreedy (exploration-exploitation) algorithm.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *prob*: Probability of choosing exploitation
+        *epsilon*: Probability of choosing exploration
+        *action_history*: History of all played actions in the current session
+        *payoff_history*: History of all obtained payoffs associated to the played actions
+    """
     actions: List[Action]
-    payoffs: List[Payoff]
     prob: float
     epsilon: float
     action_history: List[Action]
@@ -106,7 +113,11 @@ class EGreedy(Strategy):
         self.name = "EGreedy"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and parameters.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.epsilon = 0.1
         self.prob = 1 - self.epsilon
@@ -114,7 +125,10 @@ class EGreedy(Strategy):
         self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        # TODO: description
+        """
+        Determines the next action to play. Exploits the action with the highest average payoff
+        with probability *prob*, explore a random action with probability *epsilon*
+        """
         if round_ == 0:
             return random.choice(self.actions)
 
@@ -140,14 +154,22 @@ class EGreedy(Strategy):
             return self.actions[best_strategy]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        # TODO: description
+        """
+        Updates the last played action and the relative payoff obtained
+        """
         self.action_history.append(action)
         self.payoff_history.append(payoff)
 
 
 
 class UCB(Strategy):
-    #TODO: description
+    """
+    Implements the Upper Confidence Bound algorithm.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *action_history*: History of all played actions in the current session
+        *payoff_history*: History of all obtained payoffs associated to the played actions
+    """
     actions: List[Action]
     action_history: List[Action]
     payoff_history: List[Payoff]
@@ -156,13 +178,21 @@ class UCB(Strategy):
         self.name = "UCB"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and histories.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.action_history = []
         self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        # TODO: description
+        """
+        Determines the next action to play. At first every action at least once.
+        It computes the average reward obtained by playing each action. At every subsequent round, it plays the action
+        with the highest average reward.
+        """
         if(round_ == 0):
             return random.choice(self.actions)
 
@@ -185,98 +215,138 @@ class UCB(Strategy):
         return self.actions[max_score]
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
+        """
+        Updates the last played action and the relative payoff obtained
+        """
         self.action_history.append(action)
         self.payoff_history.append(payoff)
 
 
 class Softmax(Strategy):
-    """Implements the Softmax algorithm."""
+    """
+    Implements the Softmax Q-Learning algorithm.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *learning_rate*: The learning rate for the Q-Learning moving average
+        *temperature*: The temperature for the softmax distribution computation
+        *action_history*: History of all played actions in the current session
+        *qmatrix*: Moving average of payoffs for each instance of *actions*
+        *probmatrix*: Softmax probability distribution for the *actions*
+    """
     actions: List[Action]
-    qmatrix: np.ndarray
     learning_rate: float
-    discount: float
-    payoff: float
     temperature: float
     action_history: List[Action]
+    qmatrix: np.ndarray
     probmatrix: np.ndarray
 
     def __init__(self):
         self.name = "Softmax"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and histories.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.qmatrix = np.ones(len(self.actions))
         self.probmatrix = np.zeros(len(self.actions))
         self.learning_rate = 0.1
         self.temperature = 1.0
-        self.payoff = 0.0
         self.action_history = []
 
     def get_action(self, round_: int) -> Action:
-        # TODO: description
-        # first round pick a random action
+        """
+        Determines the next action to play. The first action is chosen at random.
+        Every subsequent action is chosen according to the Softmax probability distribution *probmatrix*
+        of the Q-Learning moving averages *qmatrix* for each instance of *actions*
+        """
         if round_ == 0:
-            return random.choice(self.actions)
-        # check last action and its respective q-value
-        lastaction = self.action_history[-1]
-        curq = self.qmatrix[lastaction]
-        # update q value
-        self.qmatrix[lastaction] = (1 - self.learning_rate) * curq + self.learning_rate * (self.payoff)
+            # first round pick a random action
+            action = random.choice(self.actions)
+        else:
+            # get action based on probabilities
+            action = np.where(np.random.multinomial(1, self.probmatrix))[0][0]
 
-        # normalize using softmax
-        i = 0
-        for each in self.qmatrix:
-            self.probmatrix[i] = np.exp(each / self.temperature) / sum(np.exp(self.qmatrix / self.temperature))
-            i += 1
-        # get action based on probabilities
-        ind = np.where(np.random.multinomial(1, self.probmatrix))[0][0]
-
-        return self.actions[ind]
+        return action
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        self.payoff = payoff
+        """
+        Updates the last played action, the moving average associated with the last played action
+        following the Q-Learning approach, the Softmax probability distribution given the updated
+        moving averages.
+        """
         self.action_history.append(action)
+        self.qmatrix[action] = (1 - self.learning_rate) * self.qmatrix[action] + self.learning_rate * payoff
+        for i, each in enumerate(self.qmatrix):
+            self.probmatrix[i] = np.exp(each / self.temperature) / sum(np.exp(self.qmatrix / self.temperature))
+
 
 
 class Satisficing(Strategy):
-    """Implements the Satisficing (gamma=0.1) algorithm."""
+    """
+    Implements the Satisficing (gamma=0.1) algorithm.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *alpha*: Aspiration level
+        *gamma*: Learning rate
+        *action_history*: History of all played actions in the current session
+        *payoff_history*: History of all obtained payoffs associated to the played actions
+    """
+    actions: List[Action]
     alpha: float
     gamma: float
-    actions: List[Action]
-    past_actions: List[Action]
-    past_payoffs: List[Payoff]
+    action_history: List[Action]
+    payoff_history: List[Payoff]
 
     def __init__(self):
         self.name = "Satisficing"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """
+        Initialisation of actions, parameters and histories.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.alpha = 1 + matrix_suite.get_max_payoff(0 if player == "row" else 1)
         self.gamma = 0.1
-        self.past_actions = []
-        self.past_payoffs = []
+        self.action_history = []
+        self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        """Exploit if the last action satisfies the aspiration level, otherwise explore."""
+        """
+        Determines the next action to play. Exploits the last played action if it satisfies the aspiration level,
+        otherwise explores a random action.
+        """
         action = random.choice(self.actions)
 
-        if len(self.past_payoffs) == 0 or self.past_payoffs[-1] < self.alpha:
-            action = random.randint(0, len(self.actions)-1)
-        elif self.past_payoffs[-1] >= self.alpha:
+        if len(self.payoff_history) == 0 or self.payoff_history[-1] < self.alpha:
+            action = random.choice(self.actions)
+        elif self.payoff_history[-1] >= self.alpha:
             action = self.actions[-1]
 
         return action
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        # TODO: description
+        """
+        Updates the last played action, the respective obtained payoff and the aspiration level.
+        """
         self.alpha = self.alpha * self.gamma + (1 - self.gamma) * payoff
-        self.past_actions.append(action)
-        self.past_payoffs.append(payoff)
+        self.action_history.append(action)
+        self.payoff_history.append(payoff)
 
 
 class Bully(Strategy):
-    """Implements the Bully strategy algorithm."""
+    """
+    Implements the Bully strategy algorithm.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *bestAction*: The action with the highest potential reward according the the MatrixSuite
+        *player*: 0 if row player, 1 if column player
+        *opponent*: 0 if row player: 1 if column player
+    """
     actions: List[Action]
     bestAction: Action
     player: int
@@ -286,13 +356,20 @@ class Bully(Strategy):
         self.name = "Bully"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
+        """
+        Initialisation of actions and parameters.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.player = 0 if player == "row" else 1
         self.opponent = 1 - self.player
         self.bestAction = self.find_best_action(matrix_suite)
 
     def get_action(self, round_: int) -> Action:
-        """Stubbornly returns the action with the highest potential payoff"""
+        """
+        Determines the next action to play. Stubbornly returns the action with the highest potential payoff.
+        """
         return self.bestAction
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
@@ -300,7 +377,11 @@ class Bully(Strategy):
         pass
 
     def find_best_action(self, matrix_suite: MatrixSuite) -> Action:
-        # TODO: description
+        """
+        Determine the best action given the matrix suite. The best action is determined by  summing through
+        the potential rewards obtainable by playing each possible action and choosing the one with the highest sum.
+        It considers left-hand rewards if player is the row player, the right-hand rewards if player is column player.
+        """
         player_actions = matrix_suite.get_actions("row" if self.player==0 else "col")
         opponent_actions = matrix_suite.get_actions("row" if self.opponent==0 else "col")
         max_payoff = 0
@@ -323,7 +404,17 @@ class Bully(Strategy):
 
 
 class FictitiousPlay(Strategy):
-    """Implements the Fictitious Play algorithm"""
+    """
+    Implements the Fictitious Play algorithm
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *player*: 0 if row player, 1 if column player
+        *opponent*: 0 if row player: 1 if column player
+        *opponent_actions*: The opponent's playable actions
+        *opp_action_frequency*: List of frequencies for each action
+        *most_frequent_action*: Action with the highest frequency in *opp_action_frequency*
+        *matrix_suite*: The game's matrix suite
+    """
     actions: List[Action]
     player: int
     opponent: int
@@ -336,7 +427,11 @@ class FictitiousPlay(Strategy):
         self.name = "Fictitious"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and parameters.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.player = 0 if player == "row" else 1
         self.opponent = 1 - self.player
         self.actions = matrix_suite.get_actions(player)
@@ -346,7 +441,10 @@ class FictitiousPlay(Strategy):
         self.most_frequent_actions = []
 
     def get_action(self, round_: int) -> Action:
-        """Returns the best response to the opponent's most chosen action"""
+        """
+        Determines the next action to play. Chooses a random action for the first round. At each subsequent round,
+        it chooses the best response to the opponent's most chosen action
+        """
 
         if len(self.most_frequent_actions) == 0:
             action = random.choice(self.actions)
@@ -358,15 +456,19 @@ class FictitiousPlay(Strategy):
         return action
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        """Updating frequency table"""
+        """
+        Updates the frequency table
+        """
         self.opp_action_frequency[opp_action] += 1
         self.most_frequent_actions = self.find_most_frequent_actions()
 
     def find_most_frequent_actions(self) -> List[Action]:
-        """Determines the action(s) that  is(are) most frequently chosen by the opponent"""
+        """
+        Determines the action(s) that  is(are) most frequently chosen by the opponent
+        """
         max_payoff = 0
         most_frequent_actions = []
-        for action in range(0, len(self.opponent_actions)-1):
+        for action in self.opponent_actions:
             if self.opp_action_frequency[action] > max_payoff:
                 most_frequent_actions = [action]
             elif self.opp_action_frequency[action] == max_payoff:
@@ -375,7 +477,12 @@ class FictitiousPlay(Strategy):
         return most_frequent_actions
 
     def find_best_response(self, opp_action: Action) -> Action:
-        # TODO: description
+        """
+        Given the opponent's most frequently played action, returns the best response to it.
+        The best response is defined as the playable action that ensures the highest payoff given the
+        opponent's choice.
+        It considers left-hand rewards if player is the row player, the right-hand rewards if player is column player.
+        """
         max_payoff = 0
         best_response = random.choice(self.actions)
 
@@ -395,7 +502,17 @@ class FictitiousPlay(Strategy):
 
 
 class ProportionalRegretMatching(Strategy):
-    """Implements the Proportional Regret Matching algorithm for no-regret"""
+    """
+    Implements the Proportional Regret Matching algorithm for no-regret
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *player*: 0 if row player, 1 if column player
+        *opponent*: 0 if row player: 1 if column player
+        *actual_payoff*: Last payoff obtained
+        *potential_payoof: List of potential payoffs obtainable by playing each action on the last round
+        *regret_matching*: List of normalised regrets for each action
+        *matrix_suite*: The game's matrix suite
+    """
     actions: List[Action]
     player: int
     opponent: int
@@ -408,7 +525,11 @@ class ProportionalRegretMatching(Strategy):
         self.name = "PRM"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and parameters.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.player = 0 if player == "row" else 1
         self.opponent = 1 - self.player
         self.actions = matrix_suite.get_actions(player)
@@ -418,7 +539,10 @@ class ProportionalRegretMatching(Strategy):
         self.regret_matching = [0 for action in self.actions]
 
     def get_action(self, round_: int) -> Action:
-        """Returns new action according to regret matching probability distribution"""
+        """
+        Determines the next action to play. Returns new action according to regret matching probability distribution.
+        If the regret matching probability distribution is not available, it returns a random action.
+        """
         if all(prob == 0 for prob in self.regret_matching):
             action = random.choice(self.actions)
         else:
@@ -427,7 +551,10 @@ class ProportionalRegretMatching(Strategy):
         return action
 
     def update(self, round_: int, action: Action, payoff: Payoff, opp_action: Action) -> None:
-        """Updating payoffs and regret"""
+        """
+        Updates actual payoff and potential payoffs for the last round. Computes the regret and the
+        regret matching probability distribution for the current round.
+        """
         total_regret = 0
 
         self.actual_payoff += payoff
@@ -458,9 +585,22 @@ class ProportionalRegretMatching(Strategy):
 
 
 class EFictitiousPlay(Strategy):
-    """Egreedy with UCB played 10% of times and FictitiousPlay played 90% of times"""
-    actions: List[Action]  # TODO: possibly a window
-    payoffs: List[Payoff]
+    """
+    Implements the Egreedy algorithm with UCB as exploration strategy and FictitiousPlay as exploitation strategy.
+    Class attributes:
+        *actions*: List of playable actions for the current player
+        *prob*: Probability of choosing exploitation
+        *epsilon*: Probability of choosing exploration
+        *player*: 0 if row player, 1 if column player
+        *opponent*: 0 if row player: 1 if column player
+        *opponent_actions*: The opponent's playable actions
+        *opp_action_frequency*: List of frequencies for each action
+        *most_frequent_action*: Action with the highest frequency in *opp_action_frequency*
+        *matrix_suite*: The game's matrix suite
+        *action_history*: History of all played actions in the current session
+        *payoff_history*: History of all obtained payoffs associated to the played actions
+    """
+    actions: List[Action]
     prob: float
     epsilon: float
     # FictitiousPlay
@@ -478,7 +618,11 @@ class EFictitiousPlay(Strategy):
         self.name = "EFictitious"
 
     def initialize(self, matrix_suite: MatrixSuite, player: str) -> None:
-        # TODO: description
+        """
+        Initialisation of actions and parameters.
+        Parameters:
+           *matrix_suite*: The MatrixSuite the game is played upon
+        """
         self.actions = matrix_suite.get_actions(player)
         self.payoffs = []
         self.epsilon = 0.2
@@ -495,7 +639,10 @@ class EFictitiousPlay(Strategy):
         self.payoff_history = []
 
     def get_action(self, round_: int) -> Action:
-        # TODO: description
+        """
+        Determines the next action to play. Exploits by playing Fictitious Play with probability *prob*,
+        explores by playing Upper Confidence Bound with probability *epsilon*
+        """
         strategy = np.random.choice(["exploit", "explore"], p=[self.prob, self.epsilon])
         if strategy == "exploit":
             action = self.play_FictitiousPlay(round_)
@@ -505,7 +652,11 @@ class EFictitiousPlay(Strategy):
         return action
 
     def play_UCB(self, round_: int):
-        # TODO: description
+        """
+        Determines the next action to play. At first every action at least once.
+        It computes the average reward obtained by playing each action. At every subsequent round, it plays the action
+        with the highest average reward.
+        """
         for action in self.actions:
             if action not in self.action_history:
                 return self.actions[action]
@@ -525,7 +676,10 @@ class EFictitiousPlay(Strategy):
         return self.actions[max_score]
 
     def play_FictitiousPlay(self, round_: int) -> Action:
-        # TODO: description
+        """
+        Determines the next action to play. Chooses a random action for the first round. At each subsequent round,
+        it chooses the best response to the opponent's most chosen action
+        """
         if len(self.most_frequent_actions) == 0:
             action = random.choice(self.actions)
         elif len(self.most_frequent_actions) == 1:
@@ -556,7 +710,12 @@ class EFictitiousPlay(Strategy):
         return most_frequent_actions
 
     def find_best_response(self, opp_action: Action) -> Action:
-        # TODO: description
+        """
+        Given the opponent's most frequently played action, returns the best response to it.
+        The best response is defined as the playable action that ensures the highest payoff given the
+        opponent's choice.
+        It considers left-hand rewards if player is the row player, the right-hand rewards if player is column player.
+        """
         max_payoff = 0
         best_response = random.choice(self.actions)
 

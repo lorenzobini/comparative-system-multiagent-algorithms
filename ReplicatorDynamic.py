@@ -30,7 +30,7 @@ class ReplicatorDynamic:
         self.rounds = []
         self.stability_count = 0
 
-    def to_graph(self, name: str): # TODO: fix overlapping
+    def to_graph(self, name: str):
         """Visualize the evolution of proportions."""
         colors = ["#cc0000", "#ff8000", "#00994c", "#00cc00", "#cccc00", "#00cccc", "#0080ff",
                   "#9999ff", "#cc00cc"]
