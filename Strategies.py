@@ -231,7 +231,7 @@ class Softmax(Strategy):
         *temperature*: The temperature for the softmax distribution computation
         *action_history*: History of all played actions in the current session
         *qmatrix*: Moving average of payoffs for each instance of *actions*
-        *probmatrix*: Softmax probability distribution for the *actions*
+        *probmatrix*: Softmax probability distribution for each instance of *actions*
     """
     actions: List[Action]
     learning_rate: float

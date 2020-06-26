@@ -15,7 +15,7 @@ from typing import List
 
 
 '''Setting up strategies and relative proportions'''
-'''
+
 strategies = [Strategies.Aselect(), Strategies.EGreedy(), Strategies.UCB(), Strategies.Satisficing(),
               Strategies.Softmax(), Strategies.FictitiousPlay(), Strategies.Bully(),
               Strategies.ProportionalRegretMatching()]
@@ -47,13 +47,12 @@ def game_session(game_id: int, matrix_suite: MatrixSuite, strategies: List[Strat
 
     grand_table.play_games()
     print(grand_table)
-    grand_table.to_latex("Game_" + str(game_id))
+    # grand_table.to_latex("Game_" + str(game_id))
 
-    i = 1
-    for proportion in proportions:
+    for i, proportion in enumerate(proportions):
         replicator_dynamic = ReplicatorDynamic(grand_table)
-        replicator_dynamic.run(proportion, name="Game_" + str(game_id) + "_" + str(i))
-        i+=1
+        replicator_dynamic.run(proportion, name="Game_" + str(game_id) + "_" + str(i+1))
+
 
     print("Gambit test result:")
     Nash.nash_equilibria(strategies, grand_table)
@@ -74,37 +73,4 @@ game_session(6, RandomFloatMatrixSuite(), strategies_ext, proportions_ext, 19)
 
 
 
-'''
-############# TEST AREA
-print("BEGIN  ########################################\n")
-
-
-matrix_suite = RandomIntMatrixSuite()  # Create a matrix suite
-
-row_strat = Strategies.Softmax()  # Create the strategy you want to test.
-col_strat = Strategies.Softmax()
-row_strat.initialize(matrix_suite, "row")  # Initialise it with the game suite and as either "row" or "col" player.
-col_strat.initialize(matrix_suite, "col")
-
-for round in range(0, 500):
-    row_action = row_strat.get_action(round)  # Get the next action
-    col_action = col_strat.get_action(round)
-    print("Row plays action:" + row_action.__repr__())
-    print("Col plays action:" + col_action.__repr__())
-
-    row_payoff, col_payoff = matrix_suite.get_payoffs(row_action, col_action)
-    print("Payoff: " + str((row_payoff,col_payoff)))
-
-    row_strat.update(round, row_action, row_payoff, col_action)
-    col_strat.update(round, col_action, col_payoff, row_action)# Update the strategy with a fake payoff and opponent action.
-# Now you might want to look at the class attributes of the strategy,
-# which you can call the same as functions, just without any parentheses.
-print("UCB actions:")
-print(row_strat.actions, " ROW")
-print(col_strat.actions, " COL")
-print()
-
-
-print("END  ########################################\n")
-########################
 
