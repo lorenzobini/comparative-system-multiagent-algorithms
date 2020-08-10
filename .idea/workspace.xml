@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46944feb-5f43-461a-be1c-1b70bb80c12d" name="Default Changelist" comment="">
+    <list default="true" id="46944feb-5f43-461a-be1c-1b70bb80c12d" name="Default Changelist" comment="Minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +25,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/edx/Speech-Recognition" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
@@ -217,7 +216,77 @@
       <option name="project" value="LOCAL" />
       <updated>1592598742981</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Main.py refactored">
+      <created>1592643394372</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1592643394372</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Minor changes">
+      <created>1592647630844</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1592647630844</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Bug fixes, added descriptions">
+      <created>1592653931425</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1592653931425</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Minor changes">
+      <created>1592654737554</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1592654737554</updated>
+    </task>
+    <task id="LOCAL-00027" summary="New to_latex method in GrandTable.py, minor changes and bug fixes">
+      <created>1592677179992</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1592677179992</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Project done, minor refinements needed">
+      <created>1592682828268</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1592682828269</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Minor changes to plots, saved Nash from last execution">
+      <created>1592751469900</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1592751469900</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Minor changes">
+      <created>1592945463648</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1592945463648</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Refactoring">
+      <created>1593084408757</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1593084408757</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Final commit">
+      <created>1593188237088</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1593188237088</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,9 +303,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="First commit" />
-    <MESSAGE value="Added README and NAMES" />
-    <MESSAGE value="Added PDF for MAL Assignment" />
     <MESSAGE value="Added gambit.exe" />
     <MESSAGE value="Added gambit-enummixed.exe and deleted gambit.exe" />
     <MESSAGE value="Implemented GrandTable.py" />
@@ -254,21 +320,33 @@
     <MESSAGE value="Prepared Main.py, fixed issues" />
     <MESSAGE value="Implemented UCB and Softmax" />
     <MESSAGE value="Set next TODOs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set next TODOs" />
+    <MESSAGE value="Main.py refactored" />
+    <MESSAGE value="Bug fixes, added descriptions" />
+    <MESSAGE value="New to_latex method in GrandTable.py, minor changes and bug fixes" />
+    <MESSAGE value="Project done, minor refinements needed" />
+    <MESSAGE value="Minor changes to plots, saved Nash from last execution" />
+    <MESSAGE value="Minor changes" />
+    <MESSAGE value="Refactoring" />
+    <MESSAGE value="Final commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592232105490">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="208" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1504.963@0.0.1504.963" timestamp="1592232105490" />
-    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1592598740970">
+    <state x="346" y="79" key="CommitChangelistDialog2" timestamp="1593188235947">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1592598740970" />
-    <state x="533" y="224" key="FileChooserDialogImpl" timestamp="1592224679151">
+    <state x="346" y="79" key="CommitChangelistDialog2/0.0.1504.963@0.0.1504.963" timestamp="1593188235947" />
+    <state width="917" height="466" key="DebuggerActiveHint" timestamp="1592679856743">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="533" y="224" key="FileChooserDialogImpl/0.0.1504.963@0.0.1504.963" timestamp="1592224679151" />
+    <state width="917" height="466" key="DebuggerActiveHint/0.0.1504.963@0.0.1504.963" timestamp="1592679856743" />
+    <state x="533" y="224" key="FileChooserDialogImpl" timestamp="1593251973053">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="533" y="224" key="FileChooserDialogImpl/0.0.1504.963@0.0.1504.963" timestamp="1593251973053" />
     <state x="587" y="399" width="355" height="165" key="Github.CreateGistDialog" timestamp="1592223911980">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
@@ -277,46 +355,46 @@
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="626" y="376" width="258" height="210" key="Github.ShareDialog/0.0.1504.963@0.0.1504.963" timestamp="1592224485364" />
-    <state width="1483" height="347" key="GridCell.Tab.0.bottom" timestamp="1592597278061">
+    <state width="1483" height="347" key="GridCell.Tab.0.bottom" timestamp="1593080609631">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="347" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
-    <state width="1483" height="347" key="GridCell.Tab.0.center" timestamp="1592597278061">
+    <state width="1483" height="347" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1593080609631" />
+    <state width="1483" height="347" key="GridCell.Tab.0.center" timestamp="1593080609631">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="347" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
-    <state width="1483" height="347" key="GridCell.Tab.0.left" timestamp="1592597278061">
+    <state width="1483" height="347" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1593080609631" />
+    <state width="1483" height="347" key="GridCell.Tab.0.left" timestamp="1593080609631">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="347" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
-    <state width="1483" height="347" key="GridCell.Tab.0.right" timestamp="1592597278061">
+    <state width="1483" height="347" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1593080609631" />
+    <state width="1483" height="347" key="GridCell.Tab.0.right" timestamp="1593080609631">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="347" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1592597278061" />
-    <state width="1483" height="317" key="GridCell.Tab.1.bottom" timestamp="1592591253474">
+    <state width="1483" height="347" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1593080609631" />
+    <state width="1483" height="317" key="GridCell.Tab.1.bottom" timestamp="1592682846718">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="317" key="GridCell.Tab.1.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592591253474" />
-    <state width="1483" height="317" key="GridCell.Tab.1.center" timestamp="1592591253473">
+    <state width="1483" height="317" key="GridCell.Tab.1.bottom/0.0.1504.963@0.0.1504.963" timestamp="1592682846718" />
+    <state width="1483" height="317" key="GridCell.Tab.1.center" timestamp="1592682846718">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="317" key="GridCell.Tab.1.center/0.0.1504.963@0.0.1504.963" timestamp="1592591253473" />
-    <state width="1483" height="317" key="GridCell.Tab.1.left" timestamp="1592591253469">
+    <state width="1483" height="317" key="GridCell.Tab.1.center/0.0.1504.963@0.0.1504.963" timestamp="1592682846718" />
+    <state width="1483" height="317" key="GridCell.Tab.1.left" timestamp="1592682846718">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="317" key="GridCell.Tab.1.left/0.0.1504.963@0.0.1504.963" timestamp="1592591253469" />
-    <state width="1483" height="317" key="GridCell.Tab.1.right" timestamp="1592591253473">
+    <state width="1483" height="317" key="GridCell.Tab.1.left/0.0.1504.963@0.0.1504.963" timestamp="1592682846718" />
+    <state width="1483" height="317" key="GridCell.Tab.1.right" timestamp="1592682846718">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1483" height="317" key="GridCell.Tab.1.right/0.0.1504.963@0.0.1504.963" timestamp="1592591253473" />
+    <state width="1483" height="317" key="GridCell.Tab.1.right/0.0.1504.963@0.0.1504.963" timestamp="1592682846718" />
     <state x="254" y="125" key="SettingsEditor" timestamp="1592505108783">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="254" y="125" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1592505108783" />
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1592598516959">
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2" timestamp="1593188239673">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1592598516959" />
+    <state x="345" y="216" key="Vcs.Push.Dialog.v2/0.0.1504.963@0.0.1504.963" timestamp="1593188239673" />
     <state x="449" y="307" key="com.intellij.ide.util.TipDialog" timestamp="1592504505548">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
@@ -325,9 +403,27 @@
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="562" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1504.963@0.0.1504.963" timestamp="1592568170176" />
-    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1592597142736">
+    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1592653584129">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup/0.0.1504.963@0.0.1504.963" timestamp="1592597142736" />
+    <state x="415" y="206" width="672" height="678" key="search.everywhere.popup/0.0.1504.963@0.0.1504.963" timestamp="1592653584129" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/GrandTable.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
